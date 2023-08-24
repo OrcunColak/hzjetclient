@@ -1,0 +1,69 @@
+version: '3.9'
+services:
+  postgresql:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresql_schema.sql:/docker-entrypoint-initdb.d/postgresql_schema.sql
+
+  mysql:
+    # environment variables are not a list
+    environment:
+       MYSQL_ROOT_PASSWORD: root
+       MYSQL_DATABASE: db
+       # root can log in from every host
+       MYSQL_ROOT_HOST: '%'
+    container_name: mysql
+    ports:
+      - '3306:3306'
+    # For volumes, it will execute files with extensions .sh, .sql and .sql.gz that are found in
+    # /docker-entrypoint-initdb.d. Files will be executed in alphabetical order.
+    volumes:
+      - './mysql_schema.sql:/docker-entrypoint-initdb.d/schema.sql'
+    image: 'mysql:8.0'
+
+  artemis:
+    image: quay.io/artemiscloud/activemq-artemis-broker
+    ports:
+      - "8161:8161"
+      - "61616:61616"
+    volumes:
+      - ./broker/broker.xml:/opt/amq/conf/broker.xml
+    environment:
+      AMQ_USER: "admin"
+      AMQ_PASSWORD: "admin"
+      AMQ_EXTRA_ARGS: "--http-host 0.0.0.0 --relax-jolokia"
+
+  hazelcast:
+    container_name: hazelcast
+    ports:
+      - '5701:5701'
+    image: 'hazelcast/hazelcast:5.4.0-SNAPSHOT'
+
+  management-center:
+    image: hazelcast/management-center
+    ports:
+      - "8080:8080"
+    environment:
+      - MC_DEFAULT_CLUSTER=dev
+      - MC_DEFAULT_CLUSTER_MEMBERS=hazelcast
+
+
+# to start containers
+# docker-compose up
+
+# to remove the volumes
+# docker-compose down -v
+
+# login with
+# mysql -uroot -proot
+
+# For MC go to
+# http://localhost:8080
+# and enable dev mode
