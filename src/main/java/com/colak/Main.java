@@ -1,6 +1,6 @@
 package com.colak;
 
-import com.colak.activemq.ArtemisToArtemisJob;
+import com.colak.mapjournal.IMapJournalToMapJob;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
@@ -16,7 +16,9 @@ public class Main {
         ClientConfig clientConfig = new ClientConfig();
         HazelcastInstance hazelcastInstanceClient = HazelcastClient.newHazelcastClient(clientConfig);
 
-        ArtemisToArtemisJob.submit(hazelcastInstanceClient);
+        IMapJournalToMapJob.submit(hazelcastInstanceClient);
+
+//        ArtemisToArtemisJob.submit();
 
 //
 //        String databaseUrl = "jdbc:postgresql://postgresql:5432/db?user=postgres&password=postgres";

@@ -30,7 +30,7 @@ public class ArtemisToArtemisJob {
                 .withoutTimestamps()
                 .writeTo(sinkJms);
 
-        JetService jet = hazelcastInstance.getJet();
+        JetService jetService = hazelcastInstance.getJet();
 
         try {
             JobConfig jobConfig = new JobConfig();
@@ -38,7 +38,7 @@ public class ArtemisToArtemisJob {
             jobConfig.addJar("D:\\Users\\user\\.m2\\repository\\org\\apache\\activemq\\artemis-jakarta-client-all\\2.30.0\\artemis-jakarta-client-all-2.30.0.jar");
 
             // This is a stream job
-            jet.newJob(pipeline, jobConfig);
+            jetService.newJob(pipeline, jobConfig);
         } catch (Exception exception) {
             log.error("An exception occurred!", exception);
         }

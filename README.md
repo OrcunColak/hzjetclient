@@ -1,1 +1,1 @@
-Project to test PostgresSQL with Jet 
+Project to test Hazelcast Jet Engine as a client
