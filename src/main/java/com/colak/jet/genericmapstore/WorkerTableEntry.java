@@ -1,4 +1,4 @@
-package com.colak.genericmapstore;
+package com.colak.jet.genericmapstore;
 
 public class WorkerTableEntry {
     private int id;

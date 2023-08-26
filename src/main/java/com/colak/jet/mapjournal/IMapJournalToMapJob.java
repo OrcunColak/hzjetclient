@@ -1,4 +1,4 @@
-package com.colak.mapjournal;
+package com.colak.jet.mapjournal;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.jet.JetService;

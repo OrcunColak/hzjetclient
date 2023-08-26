@@ -1,4 +1,4 @@
-package com.colak.toimap;
+package com.colak.jet.toimap;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.jet.JetService;

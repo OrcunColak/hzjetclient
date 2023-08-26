@@ -1,4 +1,4 @@
-package com.colak.fromimap;
+package com.colak.jet.fromimap;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.jet.JetService;

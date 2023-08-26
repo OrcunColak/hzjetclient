@@ -1,7 +1,7 @@
-package com.colak.ingest;
+package com.colak.jet.ingest;
 
-import com.colak.jdbcmapping.CreateJdbcMapping;
-import com.colak.kafkamapping.KafkaMappingConfig;
+import com.colak.jet.jdbcmapping.CreateJdbcMapping;
+import com.colak.jet.kafkamapping.KafkaMappingConfig;
 import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import lombok.experimental.UtilityClass;

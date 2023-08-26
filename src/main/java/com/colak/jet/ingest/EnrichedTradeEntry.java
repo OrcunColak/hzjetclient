@@ -1,6 +1,6 @@
-package com.colak.ingest;
+package com.colak.jet.ingest;
 
-import com.colak.genericmapstore.WorkerTableEntry;
+import com.colak.jet.genericmapstore.WorkerTableEntry;
 
 public class EnrichedTradeEntry {
     private TradeEntry tradeEntry;

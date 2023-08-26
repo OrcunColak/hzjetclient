@@ -1,4 +1,4 @@
-package com.colak.activemq;
+package com.colak.jet.activemq;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.jet.JetService;

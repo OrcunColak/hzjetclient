@@ -1,6 +1,6 @@
 package com.colak;
 
-import com.colak.mapjournal.IMapJournalToMapJob;
+import com.colak.datastructures.nearcache.NearCacheTTL;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
@@ -13,29 +13,18 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("Starting HZ Client");
+        HazelcastInstance hazelcastInstanceClient = getHazelcastInstanceByXml();
+        NearCacheTTL.testTTL(hazelcastInstanceClient);
+    }
+
+
+    private static HazelcastInstance getHazelcastInstanceByConfig() {
         ClientConfig clientConfig = new ClientConfig();
-        HazelcastInstance hazelcastInstanceClient = HazelcastClient.newHazelcastClient(clientConfig);
+        return HazelcastClient.newHazelcastClient(clientConfig);
+    }
 
-        IMapJournalToMapJob.submit(hazelcastInstanceClient);
-
-//        ArtemisToArtemisJob.submit();
-
-//
-//        String databaseUrl = "jdbc:postgresql://postgresql:5432/db?user=postgres&password=postgres";
-//
-//        CreateJdbcDataConnection.createDataConnection(hazelcastInstanceClient, databaseUrl, "postgres", "postgres");
-//        CreateJdbcMapping.createMapping(hazelcastInstanceClient);
-//
-//        CreateKafkaMapping.createMapping(hazelcastInstanceClient);
-//
-//        IngestJob.submitJob(hazelcastInstanceClient, databaseUrl);
-
-//        CreateGenericMapStore.createGenericMapStore(hazelcastInstanceClient);
-
-
-//        String connectorJar = "postgresql-42.6.0.jar";
-//        JdbcToIMapJob.submit(hazelcastInstanceClient, baseJdbcURL, connectorJar);
-//        IMapToJdbcJob.submit(hazelcastInstanceClient, baseJdbcURL, connectorJar);
+    private static HazelcastInstance getHazelcastInstanceByXml() {
+        return HazelcastClient.newHazelcastClient();
     }
 
 }

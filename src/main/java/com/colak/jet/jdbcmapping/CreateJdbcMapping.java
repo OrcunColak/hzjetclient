@@ -1,6 +1,6 @@
-package com.colak.jdbcmapping;
+package com.colak.jet.jdbcmapping;
 
-import com.colak.jdbc_dataconnection.CreateJdbcDataConnection;
+import com.colak.jet.jdbc_dataconnection.CreateJdbcDataConnection;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;

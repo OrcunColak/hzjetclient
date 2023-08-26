@@ -1,6 +1,6 @@
-package com.colak.genericmapstore;
+package com.colak.jet.genericmapstore;
 
-import com.colak.jdbc_dataconnection.CreateJdbcDataConnection;
+import com.colak.jet.jdbc_dataconnection.CreateJdbcDataConnection;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.MapStoreConfig;

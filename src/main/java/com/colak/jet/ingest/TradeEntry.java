@@ -1,4 +1,4 @@
-package com.colak.ingest;
+package com.colak.jet.ingest;
 
 import java.math.BigDecimal;
 

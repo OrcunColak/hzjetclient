@@ -1,4 +1,4 @@
-package com.colak.jdbc_dataconnection;
+package com.colak.jet.jdbc_dataconnection;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.sql.SqlResult;
