@@ -38,6 +38,8 @@ public class ShowResources {
             }
         } catch (Exception exception) {
             log.error("Exception caught ", exception);
+        } finally {
+            log.info("SHOW RESOURCES FOR Postgres finished");
         }
     }
 
@@ -62,6 +64,8 @@ public class ShowResources {
             }
         } catch (Exception exception) {
             log.error("Exception caught ", exception);
+        } finally {
+            log.info("SHOW RESOURCES FOR MySQL finished");
         }
     }
 }
