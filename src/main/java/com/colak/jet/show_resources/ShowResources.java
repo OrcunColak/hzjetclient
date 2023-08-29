@@ -2,6 +2,7 @@ package com.colak.jet.show_resources;
 
 import com.colak.jet.jdbc_dataconnection.CreateMySQLDataConnection;
 import com.colak.jet.jdbc_dataconnection.CreatePostgresDataConnection;
+import com.colak.jet.jdbc_dataconnection.CreateSqlServerDataConnection;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlRow;
@@ -18,7 +19,6 @@ import java.util.stream.Collectors;
 public class ShowResources {
 
     public static void submitForPostgres(HazelcastInstance hazelcastInstanceClient) {
-
         try {
             CreatePostgresDataConnection.createDataConnection(hazelcastInstanceClient);
 
@@ -44,7 +44,6 @@ public class ShowResources {
     }
 
     public static void submitForMySql(HazelcastInstance hazelcastInstanceClient) {
-
         try {
             CreateMySQLDataConnection.createDataConnection(hazelcastInstanceClient);
 
@@ -66,6 +65,31 @@ public class ShowResources {
             log.error("Exception caught ", exception);
         } finally {
             log.info("SHOW RESOURCES FOR MySQL finished");
+        }
+    }
+
+    public static void submitForSqlServer(HazelcastInstance hazelcastInstanceClient) {
+        try {
+            CreateSqlServerDataConnection.createDataConnection(hazelcastInstanceClient);
+
+            SqlService sqlService = hazelcastInstanceClient.getSql();
+            try (SqlResult sqlResult = sqlService.execute("SHOW RESOURCES FOR " + CreateSqlServerDataConnection.CONNECTION_NAME)) {
+                SqlRowMetadata rowMetadata = sqlResult.getRowMetadata();
+                String columnHeader = rowMetadata.getColumns().stream()
+                        .map(sqlColumnMetadata -> Objects.toString(sqlColumnMetadata))
+                        .collect(Collectors.joining(" "));
+
+
+                log.info(columnHeader);
+
+                for (SqlRow sqlRow : sqlResult) {
+                    log.info(sqlRow.getObject(0) + " " + sqlRow.getObject(1));
+                }
+            }
+        } catch (Exception exception) {
+            log.error("Exception caught ", exception);
+        } finally {
+            log.info("SHOW RESOURCES FOR Sql Server finished");
         }
     }
 }
