@@ -6,16 +6,23 @@ import com.hazelcast.sql.SqlService;
 import lombok.experimental.UtilityClass;
 
 @UtilityClass
-public class CreateJdbcDataConnection {
+public class CreatePostgresDataConnection {
 
     // Name of the connection pool
     public final String CONNECTION_NAME = "postgres_shared";
 
+    public static void createDataConnection(HazelcastInstance hazelcastInstanceClient) {
+        String databaseUrl = "jdbc:postgresql://localhost:5432/db";
+        String userName = "postgres";
+        String password = "postgres";
+        createDataConnection(hazelcastInstanceClient, databaseUrl, userName, password);
+    }
+
     // Create JDBC Connection Pool on cluster
-    public static void createDataConnection(HazelcastInstance hazelcastInstanceClient,
-                                            String databaseUrl,
-                                            String userName,
-                                            String password) {
+    private static void createDataConnection(HazelcastInstance hazelcastInstanceClient,
+                                             String databaseUrl,
+                                             String userName,
+                                             String password) {
         String sql = String.format("CREATE DATA CONNECTION IF NOT EXISTS %s TYPE JDBC SHARED OPTIONS('jdbcUrl'='%s','user'='%s','password'='%s')",
                 CONNECTION_NAME, databaseUrl, userName, password);
 

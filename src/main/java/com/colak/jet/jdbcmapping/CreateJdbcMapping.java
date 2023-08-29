@@ -1,6 +1,6 @@
 package com.colak.jet.jdbcmapping;
 
-import com.colak.jet.jdbc_dataconnection.CreateJdbcDataConnection;
+import com.colak.jet.jdbc_dataconnection.CreatePostgresDataConnection;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
@@ -17,7 +17,7 @@ public class CreateJdbcMapping {
         // Mapping name is the same as table name
         // Mapping needs a pre-created DATA CONNECTION
         String createMappingQuery = format("CREATE OR REPLACE MAPPING %s (id INTEGER,name VARCHAR,ssn VARCHAR) DATA CONNECTION %s",
-                DB_TABLE_NAME, CreateJdbcDataConnection.CONNECTION_NAME);
+                DB_TABLE_NAME, CreatePostgresDataConnection.CONNECTION_NAME);
 
         SqlService sqlService = hazelcastInstanceClient.getSql();
         SqlResult sqlResult = sqlService.execute(createMappingQuery);

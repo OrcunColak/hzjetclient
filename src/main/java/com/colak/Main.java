@@ -1,8 +1,6 @@
 package com.colak;
 
-import com.colak.datastructures.nearcache.NearCacheTTL;
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.client.config.ClientConfig;
+import com.colak.jet.show_resources.ShowResources;
 import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,18 +11,13 @@ public class Main {
 
     public static void main(String[] args) {
         logger.info("Starting HZ Client");
-        HazelcastInstance hazelcastInstanceClient = getHazelcastInstanceByXml();
-        NearCacheTTL.testTTL(hazelcastInstanceClient);
+        HazelcastInstance hazelcastInstanceClient = HazelcastClientFactory.getHazelcastInstanceByConfig();
+        ShowResources.submitForPostgres(hazelcastInstanceClient);
+        ShowResources.submitForMySql(hazelcastInstanceClient);
+
     }
 
 
-    private static HazelcastInstance getHazelcastInstanceByConfig() {
-        ClientConfig clientConfig = new ClientConfig();
-        return HazelcastClient.newHazelcastClient(clientConfig);
-    }
 
-    private static HazelcastInstance getHazelcastInstanceByXml() {
-        return HazelcastClient.newHazelcastClient();
-    }
 
 }
