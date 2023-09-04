@@ -1,5 +1,6 @@
 version: '3.9'
 services:
+#  See https://medium.com/ms-sql-server-containers/create-and-setup-ms-sql-server-database-docker-containers-2422f757464d
 # user=migrator  db name = ankara schema=app
 #  mssql:
 #    image: mcr.microsoft.com/mssql/server:2017-latest
