@@ -14,7 +14,7 @@ public class Main {
         HazelcastInstance hazelcastInstanceClient = HazelcastClientFactory.getHazelcastInstanceByConfig();
         ShowResources.submitForPostgres(hazelcastInstanceClient);
         ShowResources.submitForMySql(hazelcastInstanceClient);
-
+        ShowResources.submitForSqlServer(hazelcastInstanceClient);
     }
 
 

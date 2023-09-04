@@ -12,9 +12,9 @@ public class CreateSqlServerDataConnection {
     public final String CONNECTION_NAME = "sqlserver_shared";
 
     public static void createDataConnection(HazelcastInstance hazelcastInstanceClient) {
-        String databaseUrl = "jdbc:sqlserver://localhost:1433;databaseName=master;encrypt=true;trustServerCertificate=true";
-        String userName = "sa";
-        String password = "Pass@word";
+        String databaseUrl = "jdbc:sqlserver://localhost:1433;databaseName=ankara;encrypt=true;trustServerCertificate=true";
+        String userName = "migrator";
+        String password = "migrator123!";
         createDataConnection(hazelcastInstanceClient, databaseUrl, userName, password);
     }
 

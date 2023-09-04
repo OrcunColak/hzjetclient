@@ -1,0 +1,20 @@
+version: '3.9'
+services:
+  postgresql:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgresql_schema.sql:/docker-entrypoint-initdb.d/postgresql_schema.sql
+
+
+# to start containers
+# docker-compose up
+
+# to remove the volumes
+# docker-compose down -v
