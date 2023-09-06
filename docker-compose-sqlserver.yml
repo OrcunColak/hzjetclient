@@ -2,31 +2,31 @@ version: '3.9'
 services:
 #  See https://medium.com/ms-sql-server-containers/create-and-setup-ms-sql-server-database-docker-containers-2422f757464d
 # user=migrator  db name = ankara schema=app
-#  mssql:
-#    image: mcr.microsoft.com/mssql/server:2017-latest
-#    container_name: mssql
-#    environment:
-#      - SA_PASSWORD=Pass@word
-#      - ACCEPT_EULA=Y
-#    command: /bin/bash ./entrypoint.sh
-#    ports:
-#      - 1433:1433
-#    volumes:
-#      - ./sqlserver/docker-entrypoint.sh:/entrypoint.sh
-#      - ./sqlserver/docker-db-init.sh:/db-init.sh
-#      - ./sqlserver/ankara-db-init.sql:/ankara-db-init.sql
-
-# user=sa  db name = master schema=dbo
   mssql:
     image: mcr.microsoft.com/mssql/server:2017-latest
     container_name: mssql
     environment:
       - SA_PASSWORD=Pass@word
       - ACCEPT_EULA=Y
+    command: /bin/bash ./entrypoint.sh
     ports:
       - 1433:1433
     volumes:
-      - './mssql_schema.sql:/docker-entrypoint-initdb.d/mssql_schema.sql'
+      - ./sqlserver/docker-entrypoint.sh:/entrypoint.sh
+      - ./sqlserver/docker-db-init.sh:/db-init.sh
+      - ./sqlserver/ankara-db-init.sql:/ankara-db-init.sql
+
+# user=sa  db name = master schema=dbo
+#  mssql:
+#    image: mcr.microsoft.com/mssql/server:2017-latest
+#    container_name: mssql
+#    environment:
+#      - SA_PASSWORD=Pass@word
+#      - ACCEPT_EULA=Y
+#    ports:
+#      - 1433:1433
+#    volumes:
+#      - './mssql_schema.sql:/docker-entrypoint-initdb.d/mssql_schema.sql'
 
 # to start containers
 # docker-compose -f docker-compose-sqlserver.yml up
