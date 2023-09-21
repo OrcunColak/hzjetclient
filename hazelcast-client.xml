@@ -4,9 +4,4 @@
                   http://www.hazelcast.com/schema/client-config/hazelcast-client-config-5.3.xsd">
     <instance-name>barClient</instance-name>
 
-    <near-cache name="mostlyReadMap">
-        <time-to-live-seconds>10</time-to-live-seconds>
-        <max-idle-seconds>10</max-idle-seconds>
-    </near-cache>
-
 </hazelcast-client>

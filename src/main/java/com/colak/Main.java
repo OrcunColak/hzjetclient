@@ -1,6 +1,5 @@
 package com.colak;
 
-import com.colak.datastructures.map.MemoryFormatObject;
 import com.colak.jet.show_resources.ShowResources;
 import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;
@@ -13,9 +12,8 @@ public class Main {
     public static void main(String[] args) {
         logger.info("Starting HZ Client");
         HazelcastInstance hazelcastInstanceClient = HazelcastClientFactory
-                .getHazelcastInstanceByClientUserCodeDeploymentConfig();
+                .getHazelcastInstanceByConfig();
 
-        MemoryFormatObject.test(hazelcastInstanceClient);
 //        ShowResources.submitForPostgres(hazelcastInstanceClient);
 //        ShowResources.submitForMySql(hazelcastInstanceClient);
         ShowResources.submitForSqlServer(hazelcastInstanceClient);

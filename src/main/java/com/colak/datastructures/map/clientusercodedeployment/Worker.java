@@ -1,4 +1,4 @@
-package com.colak.datastructures.map;
+package com.colak.datastructures.map.clientusercodedeployment;
 
 import java.io.Serializable;
 import java.util.Objects;
