@@ -35,7 +35,7 @@ class UserCodeDeployment {
         return HazelcastClient.newHazelcastClient(clientConfig);
     }
 
-    // Test that mep entry can be replaced when ClientUserCodeDeploymentConfig is used
+    // Test that map entry can be replaced when ClientUserCodeDeploymentConfig is used
     public static void testReplace(HazelcastInstance hazelcastInstance) {
         IMap<Integer, Worker> map = hazelcastInstance.getMap("mymap");
         Worker worker1 = new Worker("john");

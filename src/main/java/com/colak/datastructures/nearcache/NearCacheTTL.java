@@ -54,5 +54,4 @@ public class NearCacheTTL {
         // Schedule the timer task to run after 1 second
         timer.scheduleAtFixedRate(task, 0,1000);
     }
-
 }
