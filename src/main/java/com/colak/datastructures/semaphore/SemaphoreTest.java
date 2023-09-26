@@ -8,7 +8,7 @@ import com.hazelcast.cp.ISemaphore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SemaphoreTest {
+class SemaphoreTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SemaphoreTest.class);
 
