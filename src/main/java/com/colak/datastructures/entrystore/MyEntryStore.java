@@ -10,8 +10,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 class MyEntryStore implements EntryStore<String, MyRecord> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EntryStoreTest.class);
-    private ConcurrentHashMap<String, MetadataAwareValue<MyRecord>> store = new ConcurrentHashMap<>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyEntryStore.class);
+    private final ConcurrentHashMap<String, MetadataAwareValue<MyRecord>> store = new ConcurrentHashMap<>();
 
     @Override
     public void store(String key, MetadataAwareValue<MyRecord> value) {

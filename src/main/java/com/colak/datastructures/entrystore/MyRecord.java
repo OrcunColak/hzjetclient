@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 class MyRecord implements Serializable {
 
-    private String value;
+    private final String value;
 
     MyRecord(String value) {
         this.value = value;
