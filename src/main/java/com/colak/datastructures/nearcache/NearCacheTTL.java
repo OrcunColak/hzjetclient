@@ -15,13 +15,13 @@ import java.util.TimerTask;
 
 @UtilityClass
 @Slf4j
-public class NearCacheTTL {
+class NearCacheTTL {
 
-    private static final Logger logger = LoggerFactory.getLogger(NearCacheTTL.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(NearCacheTTL.class);
 
     static final String MOSTLY_READ_MAP = "mostlyReadMap";
     public static void main(String[] args) {
-        logger.info("Starting HZ Client");
+        LOGGER.info("Starting HZ Client");
 
         HazelcastInstance hazelcastInstanceClient = getHazelcastInstanceByConfig();
         testTTL(hazelcastInstanceClient);
