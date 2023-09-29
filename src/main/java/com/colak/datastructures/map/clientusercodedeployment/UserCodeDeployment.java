@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 
 class UserCodeDeployment {
 
+    private static final String MAP_NAME = "mymap";
+
     private static final Logger logger = LoggerFactory.getLogger(UserCodeDeployment.class);
 
     public static void main(String[] args) {
@@ -37,7 +39,7 @@ class UserCodeDeployment {
 
     // Test that map entry can be replaced when ClientUserCodeDeploymentConfig is used
     public static void testReplace(HazelcastInstance hazelcastInstance) {
-        IMap<Integer, Worker> map = hazelcastInstance.getMap("mymap");
+        IMap<Integer, Worker> map = hazelcastInstance.getMap(MAP_NAME);
         Worker worker1 = new Worker("john");
         Worker worker2 = new Worker("jane");
 

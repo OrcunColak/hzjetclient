@@ -35,7 +35,6 @@ class NearCacheNoEvict {
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
         testNearCacheNoEvict(hazelcastServer);
         LOGGER.info("Ending NearCacheNoEvict");
-        hazelcastServer.shutdown();
     }
 
     public static HazelcastInstance getHazelcastServerInstanceByConfig() {
@@ -72,6 +71,7 @@ class NearCacheNoEvict {
                 ;
     }
 
+    // Test that near cache does not evict because of EvictionPolicy.NONE
     public static void testNearCacheNoEvict(HazelcastInstance hazelcastInstance) {
         IMap<Integer, Integer> map = hazelcastInstance.getMap(MAP_NAME);
         map.addLocalEntryListener(new EntryAdapter<Integer, Integer>() {
