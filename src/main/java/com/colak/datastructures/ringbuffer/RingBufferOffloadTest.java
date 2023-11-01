@@ -21,9 +21,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Consumer offloads processing to a thread pool
  */
-class RingBufferSlowConsumerTest {
+class RingBufferOffloadTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RingBufferSlowConsumerTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(RingBufferOffloadTest.class);
 
     private static final String RING_BUFFER_NAME = "myringbuffer";
     private static final int RING_BUFFER_SIZE = 5000;
