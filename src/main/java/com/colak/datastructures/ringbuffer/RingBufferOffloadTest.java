@@ -55,7 +55,7 @@ class RingBufferOffloadTest {
         startSequenceCheck();
 
         // Keep the main thread alive so that the ExecutorService can continue running.
-        System.out.println("Press a key to exit");
+        LOGGER.info("Press a key to exit");
         int ignored = System.in.read();
 
         runThreadsFlag.set(false);
@@ -69,7 +69,7 @@ class RingBufferOffloadTest {
         hazelcastInstanceClient.shutdown();
         hazelcastServerInstance.shutdown();
 
-        System.out.println("Test completed");
+        LOGGER.info("Test completed");
     }
 
     private static void shutdownExecutorService(ExecutorService executorService) throws InterruptedException {
