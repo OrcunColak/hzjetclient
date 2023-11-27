@@ -23,6 +23,7 @@ public class CreatePostgresDataConnection {
                                              String databaseUrl,
                                              String userName,
                                              String password) {
+        // CREATE DATA CONNECTION IF NOT EXISTS postgres TYPE JDBC SHARED OPTIONS('jdbcUrl'='jdbc:postgresql://localhost:5432/db','user'='postgres','password'='postgres')
         String sql = String.format("CREATE DATA CONNECTION IF NOT EXISTS %s TYPE JDBC SHARED OPTIONS('jdbcUrl'='%s','user'='%s','password'='%s')",
                 CONNECTION_NAME, databaseUrl, userName, password);
 

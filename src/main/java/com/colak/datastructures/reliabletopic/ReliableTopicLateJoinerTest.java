@@ -49,12 +49,12 @@ class ReliableTopicLateJoinerTest {
         LOGGER.info("Test completed");
     }
 
-    public static HazelcastInstance getHazelcastServerInstanceByConfig() {
+    private static HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
         return Hazelcast.newHazelcastInstance(config);
     }
 
-    public static void startProducer(HazelcastInstance hazelcastServerInstance) {
+    private static void startProducer(HazelcastInstance hazelcastServerInstance) {
         ITopic<Integer> reliableTopic = hazelcastServerInstance.getReliableTopic(TOPIC_NAME);
         // Overflow the ring buffer
         for (int index = 0; index <= RingbufferConfig.DEFAULT_CAPACITY + 1; index++) {
