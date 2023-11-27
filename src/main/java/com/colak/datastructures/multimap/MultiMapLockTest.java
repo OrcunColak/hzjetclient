@@ -10,11 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Collection;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.concurrent.CountDownLatch;
 
 /**
- * Early joiner gets all published messages
- * Late joiner gets the latest message
+ * Test to show that collection mutation of MultiMap is undefined
  */
 class MultiMapLockTest {
 
@@ -33,9 +34,11 @@ class MultiMapLockTest {
         // Do test
         HazelcastInstance hazelcastClientInstance = getHazelcastClientInstanceByConfig();
 
-        testMultiThreadedAccess(hazelcastClientInstance);
+        testMultiThreadedPut(hazelcastClientInstance);
+        printMultiMapSize(hazelcastClientInstance);
 
-        printMultiMapSize (hazelcastClientInstance);
+        testMultiThreadedPutAllAsync(hazelcastClientInstance);
+        printMultiMapSize(hazelcastClientInstance);
 
         // Shut down HZ client and server
         hazelcastClientInstance.shutdown();
@@ -54,7 +57,7 @@ class MultiMapLockTest {
         return HazelcastClient.newHazelcastClient(clientConfig);
     }
 
-    private static void testMultiThreadedAccess(HazelcastInstance hazelcastClientInstance) throws InterruptedException {
+    private static void testMultiThreadedPut(HazelcastInstance hazelcastClientInstance) throws InterruptedException {
         MultiMap<Integer, Integer> multiMap = hazelcastClientInstance.getMultiMap(MULTI_MAP_NAME);
 
         final int numThreads = 1000;
@@ -64,6 +67,30 @@ class MultiMapLockTest {
             final int value = index;
             new Thread(() -> {
                 multiMap.put(KEY, value);
+                latch.countDown();
+            }).start();
+        }
+        latch.await();
+    }
+
+    private static void testMultiThreadedPutAllAsync(HazelcastInstance hazelcastClientInstance) throws InterruptedException {
+        MultiMap<Integer, Integer> multiMap = hazelcastClientInstance.getMultiMap(MULTI_MAP_NAME);
+        multiMap.clear();
+        multiMap.put(KEY, 0);
+
+        final int numThreads = 1000;
+        CountDownLatch latch = new CountDownLatch(numThreads);
+
+        for (int index = 0; index < numThreads; index++) {
+            new Thread(() -> {
+                TreeSet<Integer> integerSet = new TreeSet<>(multiMap.get(KEY));
+                Integer first = integerSet.first();
+                LOGGER.info("first is {}", first);
+                Set<Integer> collection = Set.of(first + 1);
+                try {
+                    multiMap.putAllAsync(KEY, collection).toCompletableFuture().get();
+                } catch (Exception ignored) {
+                }
                 latch.countDown();
             }).start();
         }
