@@ -31,9 +31,10 @@ class MultiMapLockTest {
         // Start server
         HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
 
-        // Do test
+        // Start client
         HazelcastInstance hazelcastClientInstance = getHazelcastClientInstanceByConfig();
 
+        // Do test
         testMultiThreadedPut(hazelcastClientInstance);
         printMultiMapSize(hazelcastClientInstance);
 

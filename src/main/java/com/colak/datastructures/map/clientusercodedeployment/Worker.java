@@ -3,7 +3,7 @@ package com.colak.datastructures.map.clientusercodedeployment;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class Worker implements Serializable {
+class Worker implements Serializable {
 
     String name;
 
