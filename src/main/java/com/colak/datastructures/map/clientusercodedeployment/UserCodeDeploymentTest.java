@@ -24,7 +24,7 @@ class UserCodeDeploymentTest {
         testReplace(hazelcastInstanceClient);
     }
 
-    public static HazelcastInstance getHazelcastInstanceByClientUserCodeDeploymentConfig() {
+    private static HazelcastInstance getHazelcastInstanceByClientUserCodeDeploymentConfig() {
 // The server must start with  UserCodeDeploymentConfig
 //        Config config = new Config();
 //        UserCodeDeploymentConfig userCodeDeploymentConfig = config.getUserCodeDeploymentConfig();
@@ -41,7 +41,7 @@ class UserCodeDeploymentTest {
     }
 
     // Test that map entry can be replaced when ClientUserCodeDeploymentConfig is used
-    public static void testReplace(HazelcastInstance hazelcastInstance) {
+    private static void testReplace(HazelcastInstance hazelcastInstance) {
         IMap<Integer, Worker> map = hazelcastInstance.getMap(MAP_NAME);
         Worker worker1 = new Worker("john");
         Worker worker2 = new Worker("jane");

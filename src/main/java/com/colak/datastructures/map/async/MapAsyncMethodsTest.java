@@ -19,22 +19,25 @@ class MapAsyncMethodsTest {
     private final String MAP_NAME = "my-map";
     private final int MAP_SIZE = 100;
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         LOGGER.info("Starting MapAsyncMethodsTest");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
         testAsyncAdd(hazelcastServer);
-        LOGGER.info("Ending MapAsyncMethodsTest");
+
+        // Shutdown server
+        hazelcastServer.shutdown();
+        LOGGER.info("Test completed");
     }
 
-    public HazelcastInstance getHazelcastServerInstanceByConfig() {
+    private HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
         return Hazelcast.newHazelcastInstance(config);
     }
 
 
-    public void testAsyncAdd(HazelcastInstance hazelcastInstance) {
+    private void testAsyncAdd(HazelcastInstance hazelcastInstance) {
         IMap<Integer, Integer> map = hazelcastInstance.getMap(MAP_NAME);
 
         for (int index = 0; index < MAP_SIZE; index++) {

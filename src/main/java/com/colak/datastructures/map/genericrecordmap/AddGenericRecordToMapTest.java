@@ -19,12 +19,10 @@ import org.slf4j.LoggerFactory;
 @UtilityClass
 @Slf4j
 class AddGenericRecordToMapTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(AddGenericRecordToMapTest.class);
-
-    private static final String MAP_NAME = "mostlyReadMap";
-    private static final int MAP_SIZE = 100;
-    private static final String INT_PROPERTY_NAME = "myint";
+    private final Logger LOGGER = LoggerFactory.getLogger(AddGenericRecordToMapTest.class);
+    private final String MAP_NAME = "mostlyReadMap";
+    private final int MAP_SIZE = 100;
+    private final String INT_PROPERTY_NAME = "myint";
 
     public static void main(String[] args) {
         LOGGER.info("Starting AddGenericRecordToMapTest");
@@ -32,18 +30,20 @@ class AddGenericRecordToMapTest {
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
         testGenericRecordMap(hazelcastServer);
-        LOGGER.info("Ending AddGenericRecordToMapTest");
+
+        // Shutdown server
+        hazelcastServer.shutdown();
+        LOGGER.info("Test completed");
     }
 
-    public static HazelcastInstance getHazelcastServerInstanceByConfig() {
+    private HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
-
         return Hazelcast.newHazelcastInstance(config);
     }
 
 
     // Test that we can add GenericRecords to map
-    public static void testGenericRecordMap(HazelcastInstance hazelcastInstance) {
+    private void testGenericRecordMap(HazelcastInstance hazelcastInstance) {
         IMap<Integer, GenericRecord> map = hazelcastInstance.getMap(MAP_NAME);
         map.addLocalEntryListener(new EntryAdapter<Integer, GenericRecord>() {
 

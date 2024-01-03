@@ -43,7 +43,7 @@ class ReliableTopicLateJoinerTest {
         earlyJoinerCountDownLatch.await();
         lateJoinerCountDownLatch.await();
 
-        // Shut down HZ server
+        // Shutdown server
         hazelcastServerInstance.shutdown();
 
         LOGGER.info("Test completed");
@@ -63,7 +63,6 @@ class ReliableTopicLateJoinerTest {
     }
 
     private static void startEarlyJoiningListener(HazelcastInstance hazelcastServerInstance) {
-
         ITopic<Integer> reliableTopic = hazelcastServerInstance.getReliableTopic(TOPIC_NAME);
         reliableTopic.addMessageListener(new ReliableMessageListenerAdapter<>(message -> {
             Integer integer = message.getMessageObject();
@@ -81,7 +80,6 @@ class ReliableTopicLateJoinerTest {
     }
 
     private static void startLateJoiningListener(HazelcastInstance hazelcastServerInstance) {
-
         ITopic<Integer> reliableTopic = hazelcastServerInstance.getReliableTopic(TOPIC_NAME);
         reliableTopic.addMessageListener(new ReliableMessageListenerAdapter<>(message -> {
             Integer integer = message.getMessageObject();
