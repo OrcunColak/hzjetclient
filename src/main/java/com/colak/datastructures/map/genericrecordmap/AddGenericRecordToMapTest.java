@@ -13,23 +13,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * Test that we can add GenericRecords to map
+ */
 @UtilityClass
 @Slf4j
-class GenericRecordMap {
+class AddGenericRecordToMapTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(GenericRecordMap.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AddGenericRecordToMapTest.class);
 
     private static final String MAP_NAME = "mostlyReadMap";
     private static final int MAP_SIZE = 100;
     private static final String INT_PROPERTY_NAME = "myint";
 
     public static void main(String[] args) {
-        LOGGER.info("Starting NearCacheNoEvict");
+        LOGGER.info("Starting AddGenericRecordToMapTest");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
         testGenericRecordMap(hazelcastServer);
-        LOGGER.info("Ending NearCacheNoEvict");
+        LOGGER.info("Ending AddGenericRecordToMapTest");
     }
 
     public static HazelcastInstance getHazelcastServerInstanceByConfig() {

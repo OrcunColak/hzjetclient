@@ -8,11 +8,14 @@ import com.hazelcast.map.IMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class UserCodeDeployment {
+/**
+ * Test that map entry can be replaced when ClientUserCodeDeploymentConfig is used
+ */
+class UserCodeDeploymentTest {
 
     private static final String MAP_NAME = "mymap";
 
-    private static final Logger logger = LoggerFactory.getLogger(UserCodeDeployment.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserCodeDeploymentTest.class);
 
     public static void main(String[] args) {
         logger.info("Starting HZ Client");

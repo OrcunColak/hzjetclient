@@ -2,7 +2,6 @@ package com.colak.jet.ingest;
 
 import com.colak.jet.jdbcmapping.CreateJdbcMapping;
 import com.colak.jet.kafkamapping.KafkaMappingConfig;
-import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import lombok.experimental.UtilityClass;
 
@@ -32,9 +31,7 @@ public class IngestJobWithSql {
 
         sqlService.execute(createSinkMappingQuery);
 
-        try (SqlResult sqlResult = sqlService.execute(createSinkMappingQuery)) {
-
-        }
+        sqlService.executeUpdate(createSinkMappingQuery);
     }
 
     public void submit(SqlService sqlService) {
@@ -49,8 +46,7 @@ public class IngestJobWithSql {
                        "SELECT trade.id, trade.ticker, trade.price, trade.amount, worker.ssn FROM %s AS trade JOIN %s AS worker ON trade.id = worker.id;",
                         INGEST_JOB_NAME, SINK_MAP, KafkaMappingConfig.kafkaMappingName, CreateJdbcMapping.DB_TABLE_NAME);
 
-        try (SqlResult sqlResult = sqlService.execute(createJobQuery)) {
+        sqlService.executeUpdate(createJobQuery);
 
-        }
     }
 }

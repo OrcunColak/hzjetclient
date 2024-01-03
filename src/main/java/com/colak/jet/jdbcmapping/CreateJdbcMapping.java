@@ -2,7 +2,6 @@ package com.colak.jet.jdbcmapping;
 
 import com.colak.jet.jdbc_dataconnection.CreatePostgresDataConnection;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import lombok.experimental.UtilityClass;
 
@@ -21,7 +20,6 @@ public class CreateJdbcMapping {
                 DB_TABLE_NAME, CreatePostgresDataConnection.CONNECTION_NAME);
 
         SqlService sqlService = hazelcastInstanceClient.getSql();
-        SqlResult sqlResult = sqlService.execute(createMappingQuery);
-        sqlResult.close();
+        sqlService.executeUpdate(createMappingQuery);
     }
 }

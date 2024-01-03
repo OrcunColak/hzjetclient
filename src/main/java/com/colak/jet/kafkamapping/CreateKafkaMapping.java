@@ -1,7 +1,6 @@
 package com.colak.jet.kafkamapping;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
@@ -33,8 +32,7 @@ public class CreateKafkaMapping {
                        ");", KafkaMappingConfig.kafkaMappingName, KafkaMappingConfig.bootstrapServers, KafkaMappingConfig.confluentUsername, KafkaMappingConfig.confluentPassword);
 
         SqlService sqlService = hazelcastInstanceClient.getSql();
-        SqlResult sqlResult = sqlService.execute(createMappingQuery);
-        sqlResult.close();
+        sqlService.executeUpdate(createMappingQuery);
 
         populateMainMapWithTwoEntries(sqlService);
 
@@ -52,7 +50,6 @@ public class CreateKafkaMapping {
                        "  (1, 'ABCD', 5.5, 10),\n" +
                        "  (2, 'EFGH', 14, 20);", KafkaMappingConfig.kafkaMappingName);
 
-        SqlResult sqlResult = sqlService.execute(insertQuery);
-        sqlResult.close();
+        sqlService.executeUpdate(insertQuery);
     }
 }

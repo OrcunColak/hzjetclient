@@ -1,7 +1,6 @@
 package com.colak.jet.jdbc_dataconnection;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.sql.SqlResult;
 import com.hazelcast.sql.SqlService;
 import lombok.experimental.UtilityClass;
 
@@ -27,7 +26,6 @@ public class CreateSqlServerDataConnection {
                 CONNECTION_NAME, databaseUrl, userName, password);
 
         SqlService sqlService = hazelcastInstanceClient.getSql();
-        SqlResult sqlResult = sqlService.execute(sql);
-        sqlResult.close();
+        sqlService.executeUpdate(sql);
     }
 }
