@@ -21,7 +21,7 @@ import java.util.stream.IntStream;
 import static com.hazelcast.jet.Util.entry;
 
 /**
- * When Jet Job throws exception, we receive java.util.concurrent.CompletionException
+ * When Jet Job throws exception, we receive java.util.concurrent.CompletionException for job.join() call
  */
 class JobExceptionTest {
     private static final Logger LOGGER = LoggerFactory.getLogger(JobExceptionTest.class);
