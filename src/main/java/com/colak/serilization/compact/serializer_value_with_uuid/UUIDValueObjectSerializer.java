@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.serializer_uuid;
+package com.colak.serilization.compact.serializer_value_with_uuid;
 
 import com.hazelcast.nio.serialization.compact.CompactReader;
 import com.hazelcast.nio.serialization.compact.CompactSerializer;
@@ -20,7 +20,8 @@ class UUIDValueObjectSerializer implements CompactSerializer<UUIDValueObject> {
 
     @Override
     public void write(CompactWriter writer, UUIDValueObject uuidValueObject) {
-        writer.writeString("uuidField", uuidValueObject.getUuid().toString());
+        UUID uuid = uuidValueObject.getUuid();
+        writer.writeString("uuidField", uuid.toString());
     }
 
 

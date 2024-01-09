@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.serializer_uuid;
+package com.colak.serilization.compact.serializer_value_with_uuid;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +9,7 @@ import java.util.UUID;
 @Setter
 class UUIDValueObject {
 
-    UUID uuid;
+    private UUID uuid;
 
     public static UUIDValueObject createNew () {
         UUIDValueObject valueObject = new UUIDValueObject();

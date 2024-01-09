@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.serializer_uuid;
+package com.colak.serilization.compact.serializer_value_with_uuid;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
@@ -57,8 +57,8 @@ class SerializerConfigurationTest {
     }
 
     private static void populateMap(HazelcastInstance hazelcastClientInstance) {
-        IMap<Integer, UUIDValueObject> myWorkerMap = hazelcastClientInstance.getMap(MAP_NAME);
-        myWorkerMap.put(KEY, UUIDValueObject.createNew());
+        IMap<Integer, UUIDValueObject> myMap = hazelcastClientInstance.getMap(MAP_NAME);
+        myMap.put(KEY, UUIDValueObject.createNew());
     }
 
 }
