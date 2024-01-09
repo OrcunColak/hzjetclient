@@ -5,14 +5,18 @@ services:
     ports:
       - '5701:5701'
     image: 'hazelcast/hazelcast:5.4.0-SNAPSHOT'
-
-  management-center:
-    image: hazelcast/management-center
-    ports:
-      - "8080:8080"
     environment:
-      - MC_DEFAULT_CLUSTER=dev
-      - MC_DEFAULT_CLUSTER_MEMBERS=hazelcast
+      HZ_JET_ENABLED: 'true'
+      HZ_JET_RESOURCEUPLOADENABLED: 'true'
+      HZ_NETWORK_JOIN_TCPIP_MEMBERS: hazelcast1,hazelcast2,hazelcast3
+
+#  management-center:
+#    image: hazelcast/management-center
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      - MC_DEFAULT_CLUSTER=dev
+#      - MC_DEFAULT_CLUSTER_MEMBERS=hazelcast
 
 
 # to start containers

@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.serializerconfiguration;
+package com.colak.serilization.compact.ucd.serializerconfiguration;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

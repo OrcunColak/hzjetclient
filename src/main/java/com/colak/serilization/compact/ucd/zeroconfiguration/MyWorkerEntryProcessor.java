@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.zeroconfiguration;
+package com.colak.serilization.compact.ucd.zeroconfiguration;
 
 import com.hazelcast.map.EntryProcessor;
 

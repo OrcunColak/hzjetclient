@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.zeroconfiguration;
+package com.colak.serilization.compact.ucd.zeroconfiguration;
 
 //Hazelcast tries to extract a schema out of the class.
 // If successful, it registers the zero-config serializer associated with the extracted schema and uses it

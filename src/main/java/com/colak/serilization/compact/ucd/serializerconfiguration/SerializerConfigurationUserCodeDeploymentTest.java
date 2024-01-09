@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.zeroconfiguration;
+package com.colak.serilization.compact.ucd.serializerconfiguration;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory;
 import java.util.Map;
 
 /**
- * Test to show that zero configuration compact serializer works
+ * Test to show that UCD and compact serializer  configuration works
  */
-class ZeroConfigurationUserCodeDeploymentTest {
+class SerializerConfigurationUserCodeDeploymentTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZeroConfigurationUserCodeDeploymentTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SerializerConfigurationUserCodeDeploymentTest.class);
 
     private static final String MAP_NAME = "worker_map";
 
@@ -54,6 +54,10 @@ class ZeroConfigurationUserCodeDeploymentTest {
         userCodeDeploymentConfig.setEnabled(true);
         userCodeDeploymentConfig.addClass(MyWorker.class);
         userCodeDeploymentConfig.addClass(MyWorkerEntryProcessor.class);
+
+        clientConfig.getSerializationConfig()
+                .getCompactSerializationConfig()
+                .addSerializer(new MyWorkerSerializer());
 
         return HazelcastClient.newHazelcastClient(clientConfig);
     }
