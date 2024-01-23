@@ -3,6 +3,9 @@ package com.colak.serilization.compact.ucd.zeroconfiguration;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientUserCodeDeploymentConfig;
+import com.hazelcast.config.Config;
+import com.hazelcast.config.UserCodeDeploymentConfig;
+import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import org.slf4j.Logger;
@@ -22,6 +25,12 @@ class ZeroConfigurationUserCodeDeploymentTest {
     private static final Integer KEY = 1;
 
     public static void main(String[] args) throws Exception {
+
+        LOGGER.info("Starting HZ Server");
+
+        // Start client
+        HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
+
         LOGGER.info("Starting HZ Client");
 
         // Start client
@@ -32,19 +41,22 @@ class ZeroConfigurationUserCodeDeploymentTest {
         updateWorker(hazelcastClientInstance);
         printWorker(hazelcastClientInstance);
 
-        // Shut down HZ client and server
+        // Shut down HZ client
         hazelcastClientInstance.shutdown();
+
+        // Shut down HZ server
+        hazelcastServerInstance.shutdown();
 
         LOGGER.info("Test completed");
     }
 
-//    private static HazelcastInstance getHazelcastServerInstanceByConfig() {
-//        Config config = new Config();
-//        UserCodeDeploymentConfig userCodeDeploymentConfig = config.getUserCodeDeploymentConfig();
-//        userCodeDeploymentConfig.setEnabled(true);
-//
-//        return Hazelcast.newHazelcastInstance(config);
-//    }
+    private static HazelcastInstance getHazelcastServerInstanceByConfig() {
+        Config config = new Config();
+        UserCodeDeploymentConfig userCodeDeploymentConfig = config.getUserCodeDeploymentConfig();
+        userCodeDeploymentConfig.setEnabled(true);
+
+        return Hazelcast.newHazelcastInstance(config);
+    }
 
     private static HazelcastInstance getHazelcastClientInstanceByConfig() {
         ClientConfig clientConfig = new ClientConfig();

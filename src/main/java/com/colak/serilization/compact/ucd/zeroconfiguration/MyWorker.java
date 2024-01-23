@@ -1,9 +1,11 @@
 package com.colak.serilization.compact.ucd.zeroconfiguration;
 
-//Hazelcast tries to extract a schema out of the class.
-// If successful, it registers the zero-config serializer associated with the extracted schema and uses it
-// while serializing and deserializing instances of that class.
-// MyWorker has to have public access modifier, in order for UCD  + EntryProcessor to work
+/**
+ * Hazelcast tries to extract a schema out of the class.
+ * If successful, it registers the zero-config serializer associated with the extracted schema and uses it
+ * while serializing and deserializing instances of that class.
+ * MyWorker has to have public access modifier, in order for UCD  + EntryProcessor to work
+ */
 public class MyWorker {
 
     private String name;
@@ -18,8 +20,6 @@ public class MyWorker {
 
     @Override
     public String toString() {
-        return "MyWorker{" +
-               "name='" + name + '\'' +
-               '}';
+        return "MyWorker{" + "name='" + name + '\'' + '}';
     }
 }
