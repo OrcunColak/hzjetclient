@@ -1,5 +1,10 @@
 package com.colak.jet.genericmapstore;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class WorkerTableEntry {
     private int id;
     private String name;
@@ -12,27 +17,4 @@ public class WorkerTableEntry {
         this.ssn = ssn;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSsn() {
-        return ssn;
-    }
-
-    public void setSsn(String ssn) {
-        this.ssn = ssn;
-    }
 }

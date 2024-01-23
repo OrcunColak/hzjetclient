@@ -12,27 +12,27 @@ import com.hazelcast.jet.config.JetConfig;
 import com.hazelcast.jet.pipeline.Pipeline;
 import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.test.TestSources;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.sql.SQLException;
 import java.util.stream.IntStream;
 
 import static com.hazelcast.jet.Util.entry;
 
+
 /**
  * When Jet Job throws exception, we receive java.util.concurrent.CompletionException for job.join() call
  */
+@Slf4j
 class JobExceptionTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(JobExceptionTest.class);
 
     public static void main(String[] args) {
-        LOGGER.info("Starting HZ Server");
+        log.info("Starting HZ Server");
 
         // Start server
         HazelcastInstance hazelcastInstanceServer = getHazelcastServerInstanceByConfig();
 
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
         // Start client
         HazelcastInstance hazelcastInstanceClient = getHazelcastClientInstanceByConfig();
 
@@ -42,10 +42,10 @@ class JobExceptionTest {
         hazelcastInstanceClient.shutdown();
         hazelcastInstanceServer.shutdown();
 
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
-    public static HazelcastInstance getHazelcastServerInstanceByConfig() {
+    private static HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
         JetConfig jetConfig = config.getJetConfig();
         jetConfig.setEnabled(true);
@@ -77,8 +77,8 @@ class JobExceptionTest {
         try {
             job.join();
         } catch (Exception exception) {
-            LOGGER.error("Exception caught: ", exception);
+            log.error("Exception caught: ", exception);
         }
-        LOGGER.info("testEntryStore finished");
+        log.info("testEntryStore finished");
     }
 }
