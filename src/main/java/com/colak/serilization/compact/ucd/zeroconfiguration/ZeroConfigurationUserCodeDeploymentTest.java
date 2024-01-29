@@ -52,6 +52,7 @@ class ZeroConfigurationUserCodeDeploymentTest {
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
+        config.setProperty("hazelcast.logging.type", "slf4j");
         UserCodeDeploymentConfig userCodeDeploymentConfig = config.getUserCodeDeploymentConfig();
         userCodeDeploymentConfig.setEnabled(true);
 
