@@ -26,7 +26,7 @@ public class ShowResources {
             try (SqlResult sqlResult = sqlService.execute("SHOW RESOURCES FOR " + CreatePostgresDataConnection.CONNECTION_NAME)) {
                 SqlRowMetadata rowMetadata = sqlResult.getRowMetadata();
                 String columnHeader = rowMetadata.getColumns().stream()
-                        .map(sqlColumnMetadata -> Objects.toString(sqlColumnMetadata))
+                        .map(Objects::toString)
                         .collect(Collectors.joining(" "));
 
 
@@ -51,7 +51,7 @@ public class ShowResources {
             try (SqlResult sqlResult = sqlService.execute("SHOW RESOURCES FOR " + CreateMySQLDataConnection.CONNECTION_NAME)) {
                 SqlRowMetadata rowMetadata = sqlResult.getRowMetadata();
                 String columnHeader = rowMetadata.getColumns().stream()
-                        .map(sqlColumnMetadata -> Objects.toString(sqlColumnMetadata))
+                        .map(Objects::toString)
                         .collect(Collectors.joining(" "));
 
 
@@ -76,7 +76,7 @@ public class ShowResources {
             try (SqlResult sqlResult = sqlService.execute("SHOW RESOURCES FOR " + CreateSqlServerDataConnection.CONNECTION_NAME)) {
                 SqlRowMetadata rowMetadata = sqlResult.getRowMetadata();
                 String columnHeader = rowMetadata.getColumns().stream()
-                        .map(sqlColumnMetadata -> Objects.toString(sqlColumnMetadata))
+                        .map(Objects::toString)
                         .collect(Collectors.joining(" "));
 
 
