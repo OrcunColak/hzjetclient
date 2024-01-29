@@ -32,6 +32,10 @@ public class JsonQueryTest {
 
         testSelect(hazelcastInstanceServer);
 
+        hazelcastInstanceServer.shutdown();
+
+        log.info("Test completed");
+
     }
 
     private static void testSelect(HazelcastInstance hazelcastInstanceServer) {
