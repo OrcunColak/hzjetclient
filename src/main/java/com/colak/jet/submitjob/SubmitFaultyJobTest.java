@@ -5,7 +5,10 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.jet.JetService;
+import com.hazelcast.jet.Job;
 import com.hazelcast.jet.config.JetConfig;
+import com.hazelcast.jet.core.JobStatus;
 import com.hazelcast.jet.impl.JetClientInstanceImpl;
 import com.hazelcast.jet.impl.SubmitJobParameters;
 import lombok.extern.slf4j.Slf4j;
@@ -14,11 +17,13 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class SubmitFaultyJobTest {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         log.info("Starting HZ Server");
 
         // Start server
@@ -27,13 +32,42 @@ public class SubmitFaultyJobTest {
         log.info("Starting HZ Client");
         // Start client
         HazelcastInstance hazelcastInstanceClient = getHazelcastClientInstanceByConfig();
+        printJobs(hazelcastInstanceClient);
 
         testFaultJarSubmission(hazelcastInstanceClient);
+
+        for (int index = 0; index < 100; index++) {
+            boolean exitFlag = printJobs(hazelcastInstanceClient);
+            if (exitFlag) {
+                break;
+            }
+            TimeUnit.SECONDS.sleep(1);
+        }
+
 
         hazelcastInstanceClient.shutdown();
         hazelcastInstanceServer.shutdown();
 
         log.info("Test completed");
+    }
+
+    private static boolean printJobs(HazelcastInstance hazelcastInstanceClient) {
+        JetService jetService = hazelcastInstanceClient.getJet();
+        List<Job> jobs = jetService.getJobs();
+        String title = """
+                                
+                JOBS
+                -----
+                """;
+        log.info(title);
+        boolean exitFlag = false;
+        for (Job job : jobs) {
+            log.info("job : {} status : {}", job.getName(), job.getStatus());
+            if (job.getStatus() == JobStatus.RUNNING) {
+                exitFlag = true;
+            }
+        }
+        return exitFlag;
     }
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
@@ -59,6 +93,7 @@ public class SubmitFaultyJobTest {
 
             Path jarPath = getPath();
             SubmitJobParameters submitJobParameters = SubmitJobParameters.withJarOnClient()
+                    .setJobName("my-faulty-job")
                     .setJarPath(jarPath);
 
 
