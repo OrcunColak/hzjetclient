@@ -10,7 +10,7 @@ services:
       - ACCEPT_EULA=Y
     command: /bin/bash ./entrypoint.sh
     ports:
-      - 1433:1433
+      - "1433:1433"
     volumes:
       - ./sqlserver/docker-entrypoint.sh:/entrypoint.sh
       - ./sqlserver/docker-db-init.sh:/db-init.sh

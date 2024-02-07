@@ -18,12 +18,12 @@ import java.util.Iterator;
 import static java.lang.String.format;
 
 @Slf4j
-public class CreateMySQLJdbcMappingTest {
+public class CreateSqlServerJdbcMappingTest {
     private static final String DB_TABLE_NAME = "typestable";
-    private static final String CONNECTION_NAME = "mysql_shared";
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/db";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String CONNECTION_NAME = "sqlserver_shared";
+    private static final String JDBC_URL = "jdbc:sqlserver://localhost:1433;databaseName=ankara;encrypt=true;trustServerCertificate=true";
+    private static final String USERNAME = "sa";
+    private static final String PASSWORD = "Pass@word";
 
     public static void main(String[] args) throws Exception {
         createTable();
@@ -59,7 +59,8 @@ public class CreateMySQLJdbcMappingTest {
             String createTableSQL = "CREATE TABLE " + DB_TABLE_NAME +
                                     """
                                             (
-                                              tinyint_unsigned TINYINT UNSIGNED
+                                              smalldatetime_column SMALLDATETIME,
+                                              datetime2_column DATETIME2
                                             )
                                             """;
 
@@ -91,7 +92,8 @@ public class CreateMySQLJdbcMappingTest {
         // Mapping name is the same as table name
         String format = """
                 CREATE OR REPLACE MAPPING %s (
-                  tinyint_unsigned SMALLINT
+                  smalldatetime_column TIMESTAMP,
+                  datetime2_column TIMESTAMP
                 ) DATA CONNECTION %s;
                 """;
         String createMappingQuery = format(format, DB_TABLE_NAME, CONNECTION_NAME);
