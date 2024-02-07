@@ -89,7 +89,7 @@ class RingBufferOffloadTest {
         return Hazelcast.newHazelcastInstance(config);
     }
 
-    public static HazelcastInstance getHazelcastClientInstanceByConfig() {
+    private static HazelcastInstance getHazelcastClientInstanceByConfig() {
         ClientConfig clientConfig = new ClientConfig();
         return HazelcastClient.newHazelcastClient(clientConfig);
     }
