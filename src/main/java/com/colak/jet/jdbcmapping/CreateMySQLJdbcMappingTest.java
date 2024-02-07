@@ -17,6 +17,9 @@ import java.util.Iterator;
 
 import static java.lang.String.format;
 
+/**
+ * Create an example mapping
+ */
 @Slf4j
 public class CreateMySQLJdbcMappingTest {
     private static final String DB_TABLE_NAME = "typestable";

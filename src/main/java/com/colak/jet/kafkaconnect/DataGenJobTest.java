@@ -1,12 +1,10 @@
 package com.colak.jet.kafkaconnect;
 
 
-import com.hazelcast.client.HazelcastClient;
-import com.hazelcast.client.config.ClientConfig;
+import com.hazelcast.collection.IList;
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.function.ConsumerEx;
 import com.hazelcast.function.FunctionEx;
 import com.hazelcast.jet.JetService;
 import com.hazelcast.jet.Job;
@@ -14,44 +12,36 @@ import com.hazelcast.jet.config.JetConfig;
 import com.hazelcast.jet.config.JobConfig;
 import com.hazelcast.jet.kafka.connect.KafkaConnectSources;
 import com.hazelcast.jet.pipeline.Pipeline;
+import com.hazelcast.jet.pipeline.Sinks;
 import com.hazelcast.jet.pipeline.StreamSource;
 import com.hazelcast.jet.pipeline.StreamStage;
-import com.hazelcast.jet.pipeline.test.AssertionCompletedException;
-import com.hazelcast.jet.pipeline.test.AssertionSinks;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.connect.source.SourceRecord;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.Properties;
 
 /**
  * When Jet Job throws exception, we receive java.util.concurrent.CompletionException for job.join() call
  */
+@Slf4j
 class DataGenJobTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataGenJobTest.class);
 
     private static final int ITEM_COUNT = 10;
 
     public static void main(String[] args) throws Exception {
-        LOGGER.info("Starting HZ Server");
+        log.info("Starting HZ Server");
 
         // Start server
-//        HazelcastInstance hazelcastInstanceServer = getHazelcastServerInstanceByConfig();
-
-        LOGGER.info("Starting HZ Client");
-        // Start client
-        HazelcastInstance hazelcastInstanceClient = getHazelcastClientInstanceByConfig();
+        HazelcastInstance hazelcastInstanceServer = getHazelcastServerInstanceByConfig();
 
         // Do test
-        testJetJobException(hazelcastInstanceClient);
+        testJetJobException(hazelcastInstanceServer);
 
-        hazelcastInstanceClient.shutdown();
-//        hazelcastInstanceServer.shutdown();
+        hazelcastInstanceServer.shutdown();
 
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     public static HazelcastInstance getHazelcastServerInstanceByConfig() {
@@ -62,13 +52,7 @@ class DataGenJobTest {
         return Hazelcast.newHazelcastInstance(config);
     }
 
-    private static HazelcastInstance getHazelcastClientInstanceByConfig() {
-        ClientConfig clientConfig = new ClientConfig();
-        return HazelcastClient.newHazelcastClient(clientConfig);
-    }
-
-
-    static class MyProjection implements FunctionEx<SourceRecord, String> {
+    static class CountingProjection implements FunctionEx<SourceRecord, String> {
         private int counter = 0;
 
         @Override
@@ -77,52 +61,45 @@ class DataGenJobTest {
         }
     }
 
-    static class MyConsumer implements ConsumerEx<List<String>> {
-
-        private final int itemCount;
-
-        public MyConsumer(int itemCount) {
-            this.itemCount = itemCount;
-        }
-
-        @Override
-        public void acceptEx(List<String> list) {
-            if (list.size() == itemCount) {
-                throw new AssertionCompletedException();
-            }
-        }
-    }
-
-    private static void testJetJobException(HazelcastInstance hazelcastInstanceClient) throws MalformedURLException {
-        Properties randomProperties = new Properties();
-        randomProperties.setProperty("name", "datagen-connector");
-        randomProperties.setProperty("connector.class", "io.confluent.kafka.connect.datagen.DatagenConnector");
-        randomProperties.setProperty("max.interval", "1");
-        randomProperties.setProperty("kafka.topic", "orders");
-        randomProperties.setProperty("quickstart", "orders");
-        randomProperties.setProperty("tasks.max", "1");
+    private static void testJetJobException(HazelcastInstance hazelcastInstance) throws MalformedURLException {
+        Properties connectorProperties = getConnectorProperties();
 
 
         Pipeline pipeline = Pipeline.create();
-        StreamSource<String> source = KafkaConnectSources.connect(randomProperties, new MyProjection());
+        StreamSource<String> source = KafkaConnectSources.connect(connectorProperties, new CountingProjection());
         StreamStage<String> streamStage = pipeline.readFrom(source)
                 .withoutTimestamps()
                 .setLocalParallelism(1);
 
-        streamStage.writeTo(AssertionSinks.assertCollectedEventually(60,new MyConsumer(ITEM_COUNT)));
+        String listName = "test_kafka_connect_list";
+        streamStage.writeTo(Sinks.list(listName));
 
         JobConfig jobConfig = new JobConfig();
         jobConfig.addJarsInZip(getDataGenConnectorURL());
-        jobConfig.addClass(MyProjection.class, MyConsumer.class);
+        jobConfig.addClass(CountingProjection.class);
 
-        JetService jetService = hazelcastInstanceClient.getJet();
-        LOGGER.info("Starting job");
+        JetService jetService = hazelcastInstance.getJet();
+        log.info("Starting job");
         Job job = jetService.newJob(pipeline, jobConfig);
         try {
             job.join();
         } catch (Exception exception) {
-            LOGGER.error("Exception", exception);
+            log.error("Exception", exception);
         }
+        IList<Object> list = hazelcastInstance.getList(listName);
+        log.info("List size : {}", list.size());
+    }
+
+    private static Properties getConnectorProperties() {
+        Properties connectorProperties = new Properties();
+        connectorProperties.setProperty("name", "datagen-connector");
+        connectorProperties.setProperty("connector.class", "io.confluent.kafka.connect.datagen.DatagenConnector");
+        connectorProperties.setProperty("max.interval", "1");
+        connectorProperties.setProperty("iterations", String.valueOf(ITEM_COUNT));
+        connectorProperties.setProperty("kafka.topic", "orders");
+        connectorProperties.setProperty("quickstart", "orders");
+        connectorProperties.setProperty("tasks.max", "1");
+        return connectorProperties;
     }
 
     private static URL getDataGenConnectorURL() throws MalformedURLException {
