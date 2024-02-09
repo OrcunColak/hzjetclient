@@ -17,7 +17,7 @@ import java.util.Properties;
 import static java.lang.String.format;
 
 @Slf4j
-public class JsonQueryTest {
+public class JsonQueryJdbcTest {
 
     private static final String CONNECTION_NAME = "postgres_shared";
 
@@ -46,8 +46,8 @@ public class JsonQueryTest {
                 int numberOfColumns = columnNames.length;
                 for (SqlRow sqlRow : sqlResult) {
                     for (int columnIndex = 0; columnIndex < numberOfColumns; columnIndex++) {
-                        Object column = sqlRow.getObject(columnIndex);
-                        log.info("Column {}", column);
+                        Object columnValue = sqlRow.getObject(columnIndex);
+                        log.info("{} : {}", columnNames[columnIndex],columnValue);
                     }
                 }
             }
@@ -84,9 +84,6 @@ public class JsonQueryTest {
     }
 
     private static void createMapping(HazelcastInstance hazelcastInstanceClient) {
-        // CREATE MAPPING IF NOT EXISTS myworker DATA CONNECTION cassandra
-        // Mapping name is the same as table name
-        // Mapping needs a pre-created DATA CONNECTION
         String createMappingQuery = format("CREATE OR REPLACE MAPPING %s (id INTEGER,data VARCHAR) DATA CONNECTION %s",
                 DB_TABLE_NAME, CONNECTION_NAME);
 
