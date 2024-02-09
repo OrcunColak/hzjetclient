@@ -11,9 +11,9 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Iterator;
 
 import static java.lang.String.format;
 
@@ -30,6 +30,7 @@ public class CreateMySQLJdbcMappingTest {
 
     public static void main(String[] args) throws Exception {
         createTable();
+        insertRows();
 
         log.info("Starting HZ Server");
 
@@ -66,8 +67,21 @@ public class CreateMySQLJdbcMappingTest {
                                             )
                                             """;
 
-            statement.executeUpdate(createTableSQL);
-            log.info("Table created successfully.");
+            int rows = statement.executeUpdate(createTableSQL);
+            log.info("Table created successfully. {} rows effected", rows);
+        }
+    }
+
+    private static void insertRows() throws SQLException {
+        String insertSQL = "INSERT INTO " + DB_TABLE_NAME + " (tinyint_unsigned) VALUES (?)";
+
+        try (Connection connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(insertSQL)) {
+            preparedStatement.setShort(1, (short) 1);
+            // Execute the insert statement
+            int rows = preparedStatement.executeUpdate();
+            log.info("{} rows inserted successfully.", rows);
+
         }
     }
 
@@ -104,13 +118,12 @@ public class CreateMySQLJdbcMappingTest {
     }
 
     private static void selectOnMapping(HazelcastInstance hazelcastInstance) {
-        String selectSql = "SELECT * from " + DB_TABLE_NAME;
+        String selectSql = "SELECT tinyint_unsigned FROM " + DB_TABLE_NAME;
 
         SqlService sqlService = hazelcastInstance.getSql();
         int counter = 0;
         try (SqlResult sqlResult = sqlService.execute(selectSql)) {
-            Iterator<SqlRow> iterator = sqlResult.iterator();
-            while (iterator.hasNext()) {
+            for (SqlRow ignored : sqlResult) {
                 counter++;
             }
         }
