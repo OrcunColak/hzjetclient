@@ -34,6 +34,7 @@ public class CreateIMapMappingTest {
         createMapping(hazelcastInstanceServer);
         log.info("Created Mapping");
 
+        putToMap(hazelcastInstanceServer);
         insertIntoMapping(hazelcastInstanceServer);
 
         selectOnMapping(hazelcastInstanceServer);
@@ -57,7 +58,7 @@ public class CreateIMapMappingTest {
 
     private static void createMapping(HazelcastInstance hazelcastInstance) {
         // Include __key to Mapping
-        String format = """
+        String sql = """
                 CREATE OR REPLACE MAPPING %s (
                   __key INT, id INT, firstName VARCHAR, lastName VARCHAR
                 ) TYPE IMap OPTIONS
@@ -67,13 +68,14 @@ public class CreateIMapMappingTest {
                   'valueCompactTypeName' = 'person'
                 )
                 """;
-        String createMappingQuery = format(format, MAP_NAME);
+        String createMappingSql = format(sql, MAP_NAME);
 
         SqlService sqlService = hazelcastInstance.getSql();
-        sqlService.executeUpdate(createMappingQuery);
+        sqlService.executeUpdate(createMappingSql);
     }
 
-    private static void insertIntoMapping(HazelcastInstance hazelcastInstance) {
+    // Put to map with code
+    private static void putToMap(HazelcastInstance hazelcastInstance) {
         IMap<Integer, GenericRecord> map = hazelcastInstance.getMap(MAP_NAME);
         GenericRecord genericRecord = GenericRecordBuilder.compact("person")
                 .setInt32("id", 1)
@@ -81,6 +83,14 @@ public class CreateIMapMappingTest {
                 .setString("lastName", "b")
                 .build();
         map.put(1, genericRecord);
+    }
+
+    // Put to map with SQL
+    private static void insertIntoMapping(HazelcastInstance hazelcastInstance) {
+        String insertSql = "INSERT INTO " + MAP_NAME + " (__key, id, firstName, lastName) VALUES(?,?,?,?)";
+        SqlService sqlService = hazelcastInstance.getSql();
+        // executeUpdate works for INSERT INTO
+        sqlService.executeUpdate(insertSql, 2, 2, "c", "d");
     }
 
     private static void selectOnMapping(HazelcastInstance hazelcastInstance) {

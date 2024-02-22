@@ -57,7 +57,7 @@ public class CreateIMapMappingNoKeyTest {
 
     private static void createMapping(HazelcastInstance hazelcastInstance) {
         // Do not include __key to Mapping
-        String format = """
+        String sql = """
                 CREATE OR REPLACE MAPPING %s (
                   firstName VARCHAR, lastName VARCHAR, id INT)\s
                   TYPE IMap OPTIONS
@@ -67,10 +67,10 @@ public class CreateIMapMappingNoKeyTest {
                     'valueFormat' = 'compact'
                 )
                 """;
-        String createMappingQuery = format(format, MAP_NAME, MAP_NAME);
+        String createMappingSql = format(sql, MAP_NAME, MAP_NAME);
 
         SqlService sqlService = hazelcastInstance.getSql();
-        sqlService.executeUpdate(createMappingQuery);
+        sqlService.executeUpdate(createMappingSql);
     }
 
     private static void insertIntoMapping(HazelcastInstance hazelcastInstance) {
