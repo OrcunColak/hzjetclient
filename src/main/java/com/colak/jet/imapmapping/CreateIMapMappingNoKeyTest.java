@@ -21,7 +21,7 @@ import static java.lang.String.format;
  * Create an example mapping
  */
 @Slf4j
-public class CreateIMapMappingTest {
+public class CreateIMapMappingNoKeyTest {
 
     private static final String MAP_NAME = "myMap";
 
@@ -56,18 +56,18 @@ public class CreateIMapMappingTest {
 
 
     private static void createMapping(HazelcastInstance hazelcastInstance) {
-        // Include __key to Mapping
+        // Do not include __key to Mapping
         String format = """
                 CREATE OR REPLACE MAPPING %s (
-                  __key INT, id INT, firstName VARCHAR, lastName VARCHAR
-                ) TYPE IMap OPTIONS
-                (
-                  'keyFormat' = 'int',
-                  'valueFormat' = 'compact',
-                  'valueCompactTypeName' = 'person'
+                  firstName VARCHAR, lastName VARCHAR, id INT)\s
+                  TYPE IMap OPTIONS
+                  (
+                    'keyFormat' = 'int',
+                    'valueCompactTypeName' = '%s',
+                    'valueFormat' = 'compact'
                 )
                 """;
-        String createMappingQuery = format(format, MAP_NAME);
+        String createMappingQuery = format(format, MAP_NAME, MAP_NAME);
 
         SqlService sqlService = hazelcastInstance.getSql();
         sqlService.executeUpdate(createMappingQuery);
