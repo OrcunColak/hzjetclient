@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.serializer_value_with_uuid;
+package com.colak.serialization.compact.serializer_value_with_uuid;
 
 import com.hazelcast.nio.serialization.compact.CompactReader;
 import com.hazelcast.nio.serialization.compact.CompactSerializer;

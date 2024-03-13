@@ -1,4 +1,4 @@
-package com.colak.datastructures.entrystore;
+package com.colak.datastructures.mapentrystore;
 
 import com.hazelcast.map.EntryStore;
 import org.slf4j.Logger;
@@ -8,9 +8,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-class MyEntryStore implements EntryStore<String, MyRecord> {
+class MyMapEntryStore implements EntryStore<String, MyRecord> {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MyEntryStore.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyMapEntryStore.class);
     private final ConcurrentHashMap<String, MetadataAwareValue<MyRecord>> store = new ConcurrentHashMap<>();
 
     @Override

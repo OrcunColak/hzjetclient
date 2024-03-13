@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.ucd.zeroconfiguration;
+package com.colak.serialization.compact.ucd.zeroconfiguration;
 
 /**
  * Hazelcast tries to extract a schema out of the class.

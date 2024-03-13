@@ -1,4 +1,4 @@
-package com.colak.datastructures.entrystore;
+package com.colak.datastructures.mapentrystore;
 
 import java.io.Serializable;
 

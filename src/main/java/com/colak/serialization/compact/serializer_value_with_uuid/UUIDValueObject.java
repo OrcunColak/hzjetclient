@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.serializer_value_with_uuid;
+package com.colak.serialization.compact.serializer_value_with_uuid;
 
 import lombok.Getter;
 import lombok.Setter;

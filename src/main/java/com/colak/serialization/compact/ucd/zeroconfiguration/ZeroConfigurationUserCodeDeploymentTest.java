@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.ucd.zeroconfiguration;
+package com.colak.serialization.compact.ucd.zeroconfiguration;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;

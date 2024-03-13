@@ -1,4 +1,4 @@
-package com.colak.datastructures.entrystore;
+package com.colak.datastructures.mapentrystore;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
@@ -15,9 +15,12 @@ import org.slf4j.LoggerFactory;
 
 import java.util.concurrent.TimeUnit;
 
-class EntryStoreTest {
+/**
+ * Example for custom MapEntryStore
+ */
+class MapEntryStoreTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EntryStoreTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MapEntryStoreTest.class);
 
     private static final String MAP_NAME = "mymap";
 
@@ -42,8 +45,8 @@ class EntryStoreTest {
         MapStoreConfig mapStoreConfig = mapConfig.getMapStoreConfig();
         mapStoreConfig.setEnabled(true);
 
-        MyEntryStore myEntryStore = new MyEntryStore();
-        mapStoreConfig.setImplementation(myEntryStore);
+        MyMapEntryStore myMapEntryStore = new MyMapEntryStore();
+        mapStoreConfig.setImplementation(myMapEntryStore);
 
         Hazelcast.newHazelcastInstance(config);
     }

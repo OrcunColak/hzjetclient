@@ -1,4 +1,4 @@
-package com.colak.serilization.compact.ucd.serializerconfiguration;
+package com.colak.serialization.compact.ucd.serializerconfiguration;
 
 import com.hazelcast.nio.serialization.compact.CompactReader;
 import com.hazelcast.nio.serialization.compact.CompactSerializer;
