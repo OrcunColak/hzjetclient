@@ -1,4 +1,4 @@
-package com.colak.datastructures.mapentrystore;
+package com.colak.datastructures.mapentrystore.bug_ttl;
 
 import com.hazelcast.map.EntryStore;
 import org.slf4j.Logger;
@@ -12,6 +12,10 @@ class MyMapEntryStore implements EntryStore<String, MyRecord> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(MyMapEntryStore.class);
     private final ConcurrentHashMap<String, MetadataAwareValue<MyRecord>> store = new ConcurrentHashMap<>();
+
+    public int size () {
+        return store.size();
+    }
 
     @Override
     public void store(String key, MetadataAwareValue<MyRecord> value) {
