@@ -21,7 +21,7 @@ import static java.lang.String.format;
  * Create an example mapping
  */
 @Slf4j
-public class CreateIMapMappingTest {
+class CreateIMapMappingTest {
 
     private static final String MAP_NAME = "myMap";
 
@@ -29,17 +29,17 @@ public class CreateIMapMappingTest {
         log.info("Starting HZ Server");
 
         // Start server
-        HazelcastInstance hazelcastInstanceServer = getHazelcastServerInstanceByConfig();
+        HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
-        createMapping(hazelcastInstanceServer);
+        createMapping(hazelcastServer);
         log.info("Created Mapping");
 
-        putToMap(hazelcastInstanceServer);
-        insertIntoMapping(hazelcastInstanceServer);
+        putToMap(hazelcastServer);
+        insertIntoMapping(hazelcastServer);
 
-        selectOnMapping(hazelcastInstanceServer);
+        selectOnMapping(hazelcastServer);
 
-        hazelcastInstanceServer.shutdown();
+        hazelcastServer.shutdown();
 
         log.info("Test completed");
     }
@@ -56,7 +56,7 @@ public class CreateIMapMappingTest {
     }
 
 
-    private static void createMapping(HazelcastInstance hazelcastInstance) {
+    private static void createMapping(HazelcastInstance hazelcastServer) {
         // Include __key to Mapping
         String sql = """
                 CREATE OR REPLACE MAPPING %s (
@@ -70,7 +70,7 @@ public class CreateIMapMappingTest {
                 """;
         String createMappingSql = format(sql, MAP_NAME);
 
-        SqlService sqlService = hazelcastInstance.getSql();
+        SqlService sqlService = hazelcastServer.getSql();
         sqlService.executeUpdate(createMappingSql);
     }
 
