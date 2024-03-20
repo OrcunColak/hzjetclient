@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.28</lombok.version>
         <hazelcast.version>5.4.0-SNAPSHOT</hazelcast.version>
-        <logback.version>1.4.12</logback.version>
+        <logback.version>1.4.14</logback.version>
     </properties>
 
     <dependencyManagement>
@@ -46,7 +46,7 @@
 
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
+            <artifactId>hazelcast-enterprise</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
 
@@ -124,5 +124,11 @@
         </dependency>
 
     </dependencies>
+    <repositories>
+        <repository>
+            <id/>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
 
 </project>
