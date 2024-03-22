@@ -8,6 +8,7 @@ import com.hazelcast.config.UserCodeDeploymentConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
+import com.hazelcast.spi.properties.ClusterProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,7 +53,7 @@ class ZeroConfigurationUserCodeDeploymentTest {
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
-        config.setProperty("hazelcast.logging.type", "slf4j");
+        config.setProperty(ClusterProperty.LOGGING_TYPE.getName(), "slf4j");
         UserCodeDeploymentConfig userCodeDeploymentConfig = config.getUserCodeDeploymentConfig();
         userCodeDeploymentConfig.setEnabled(true);
 

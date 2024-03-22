@@ -44,9 +44,15 @@
             <version>${logback.version}</version>
         </dependency>
 
+        <!-- <dependency> -->
+        <!--     <groupId>com.hazelcast</groupId> -->
+        <!--     <artifactId>hazelcast-enterprise</artifactId> -->
+        <!--     <version>${hazelcast.version}</version> -->
+        <!-- </dependency> -->
+
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast-enterprise</artifactId>
+            <artifactId>hazelcast</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
 
@@ -124,11 +130,6 @@
         </dependency>
 
     </dependencies>
-    <repositories>
-        <repository>
-            <id/>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
-    </repositories>
+
 
 </project>
