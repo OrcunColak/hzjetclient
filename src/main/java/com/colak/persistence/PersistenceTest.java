@@ -1,4 +1,4 @@
-package com.colak.hotrestart;
+package com.colak.persistence;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.config.DataPersistenceConfig;
@@ -14,18 +14,18 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 
 /**
- * Example for hot restart
+ * Example for IMap persistence
  */
-class HotRestartPersistTest {
+class PersistenceTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(HotRestartPersistTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceTest.class);
 
     private static final String MAP_NAME = "mymap";
 
     public static void main(String[] args) {
         LOGGER.info("Starting HZ Client");
 
-        System.setProperty(BuildInfoProvider.HAZELCAST_INTERNAL_OVERRIDE_VERSION,"5.3.0");
+        System.setProperty(BuildInfoProvider.HAZELCAST_INTERNAL_OVERRIDE_VERSION, "5.3.0");
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
