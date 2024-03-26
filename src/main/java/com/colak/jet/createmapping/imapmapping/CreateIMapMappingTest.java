@@ -1,4 +1,4 @@
-package com.colak.jet.imapmapping;
+package com.colak.jet.createmapping.imapmapping;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
@@ -21,7 +21,7 @@ import static java.lang.String.format;
  * Create an example mapping
  */
 @Slf4j
-public class CreateIMapMappingNoKeyTest {
+class CreateIMapMappingTest {
 
     private static final String MAP_NAME = "myMap";
 
@@ -29,16 +29,17 @@ public class CreateIMapMappingNoKeyTest {
         log.info("Starting HZ Server");
 
         // Start server
-        HazelcastInstance hazelcastInstanceServer = getHazelcastServerInstanceByConfig();
+        HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
-        createMapping(hazelcastInstanceServer);
+        createMapping(hazelcastServer);
         log.info("Created Mapping");
 
-        insertIntoMapping(hazelcastInstanceServer);
+        putToMap(hazelcastServer);
+        insertIntoMapping(hazelcastServer);
 
-        selectOnMapping(hazelcastInstanceServer);
+        selectOnMapping(hazelcastServer);
 
-        hazelcastInstanceServer.shutdown();
+        hazelcastServer.shutdown();
 
         log.info("Test completed");
     }
@@ -55,25 +56,26 @@ public class CreateIMapMappingNoKeyTest {
     }
 
 
-    private static void createMapping(HazelcastInstance hazelcastInstance) {
-        // Do not include __key to Mapping
+    private static void createMapping(HazelcastInstance hazelcastServer) {
+        // Include __key to Mapping
         String sql = """
                 CREATE OR REPLACE MAPPING %s (
-                  firstName VARCHAR, lastName VARCHAR, id INT)\s
-                  TYPE IMap OPTIONS
-                  (
-                    'keyFormat' = 'int',
-                    'valueCompactTypeName' = '%s',
-                    'valueFormat' = 'compact'
+                  __key INT, id INT, firstName VARCHAR, lastName VARCHAR
+                ) TYPE IMap OPTIONS
+                (
+                  'keyFormat' = 'int',
+                  'valueFormat' = 'compact',
+                  'valueCompactTypeName' = 'person'
                 )
                 """;
-        String createMappingSql = format(sql, MAP_NAME, MAP_NAME);
+        String createMappingSql = format(sql, MAP_NAME);
 
-        SqlService sqlService = hazelcastInstance.getSql();
+        SqlService sqlService = hazelcastServer.getSql();
         sqlService.executeUpdate(createMappingSql);
     }
 
-    private static void insertIntoMapping(HazelcastInstance hazelcastInstance) {
+    // Put to map with code
+    private static void putToMap(HazelcastInstance hazelcastInstance) {
         IMap<Integer, GenericRecord> map = hazelcastInstance.getMap(MAP_NAME);
         GenericRecord genericRecord = GenericRecordBuilder.compact("person")
                 .setInt32("id", 1)
@@ -83,11 +85,19 @@ public class CreateIMapMappingNoKeyTest {
         map.put(1, genericRecord);
     }
 
+    // Put to map with SQL
+    private static void insertIntoMapping(HazelcastInstance hazelcastInstance) {
+        String insertSql = "INSERT INTO " + MAP_NAME + " (__key, id, firstName, lastName) VALUES(?,?,?,?)";
+        SqlService sqlService = hazelcastInstance.getSql();
+        // executeUpdate works for INSERT INTO
+        sqlService.executeUpdate(insertSql, 2, 2, "c", "d");
+    }
+
     private static void selectOnMapping(HazelcastInstance hazelcastInstance) {
         String selectSql = "SELECT * FROM " + MAP_NAME;
 
         SqlService sqlService = hazelcastInstance.getSql();
-        int counter = 0;
+        int counter;
         try (SqlResult sqlResult = sqlService.execute(selectSql)) {
             counter = showTable(sqlResult);
         }

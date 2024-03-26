@@ -1,4 +1,4 @@
-package com.colak.jet.jdbcmapping;
+package com.colak.jet.createmapping.jdbcmapping;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
@@ -21,7 +21,7 @@ import static java.lang.String.format;
  * Create an example mapping
  */
 @Slf4j
-public class CreateSqlServerJdbcMappingTest {
+class CreateSqlServerJdbcMappingTest {
     private static final String DB_TABLE_NAME = "typestable";
     private static final String CONNECTION_NAME = "sqlserver_shared";
     private static final String JDBC_URL = "jdbc:sqlserver://localhost:1433;databaseName=ankara;encrypt=true;trustServerCertificate=true";

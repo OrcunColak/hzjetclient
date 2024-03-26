@@ -1,7 +1,7 @@
 package com.colak.jet.ingest;
 
 import com.colak.jet.genericmapstore.WorkerTableEntry;
-import com.colak.jet.kafkamapping.KafkaMappingConfig;
+import com.colak.jet.createmapping.kafkamapping.KafkaMappingConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.function.FunctionEx;

@@ -1,4 +1,4 @@
-package com.colak.jet.kafkamapping;
+package com.colak.jet.createmapping.kafkamapping;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.sql.SqlService;

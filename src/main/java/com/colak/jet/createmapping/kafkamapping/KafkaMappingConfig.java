@@ -1,4 +1,4 @@
-package com.colak.jet.kafkamapping;
+package com.colak.jet.createmapping.kafkamapping;
 
 import lombok.experimental.UtilityClass;
 
