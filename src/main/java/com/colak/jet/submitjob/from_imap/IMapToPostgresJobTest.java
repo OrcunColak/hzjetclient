@@ -1,4 +1,4 @@
-package com.colak.jet.fromimap;
+package com.colak.jet.submitjob.from_imap;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
@@ -22,7 +22,7 @@ import java.util.Map;
  * Example job to read from IMap and write to postgres database
  */
 @Slf4j
-class IMapToPostgresJob {
+class IMapToPostgresJobTest {
     private static final String TABLE_NAME = "myworker_backup";
 
     private static final String MAP_NAME = "my-map";
@@ -61,7 +61,7 @@ class IMapToPostgresJob {
         Pipeline pipeline = createPipeline();
 
         JobConfig jobConfig = new JobConfig();
-        jobConfig.addClass(IMapToPostgresJob.class);
+        jobConfig.addClass(IMapToPostgresJobTest.class);
 
         JetService jet = hazelcastInstance.getJet();
         Job job = jet.newJob(pipeline, jobConfig);
