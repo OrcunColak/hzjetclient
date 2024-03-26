@@ -4,8 +4,7 @@ import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spi.properties.ClusterProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,20 +14,19 @@ import java.util.concurrent.TimeUnit;
  * and
  * <a href="https://hazelcast.com/blog/rolling-upgrade-hazelcast-imdg-on-kubernetes/">...</a>
  */
+@Slf4j
 class ShutdownHookTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ShutdownHookTest.class);
 
     public static void main(String[] args) throws Exception {
 
-        LOGGER.info("Starting HZ Server");
+        log.info("Starting HZ Server");
 
         // Start client
         HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
 
         TimeUnit.SECONDS.sleep(10);
 
-        LOGGER.info("Test completed");
+        log.info("Test completed");
 
         System.exit(0);
     }
