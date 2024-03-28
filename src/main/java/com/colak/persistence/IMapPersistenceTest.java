@@ -3,6 +3,7 @@ package com.colak.persistence;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.DataPersistenceConfig;
 import com.hazelcast.config.MapConfig;
+import com.hazelcast.config.MerkleTreeConfig;
 import com.hazelcast.config.PersistenceConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
@@ -16,9 +17,9 @@ import java.io.File;
 /**
  * Example for IMap persistence
  */
-class PersistenceTest {
+class IMapPersistenceTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PersistenceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(IMapPersistenceTest.class);
 
     private static final String MAP_NAME = "mymap";
 
@@ -48,6 +49,9 @@ class PersistenceTest {
 
         //  Configure to persist entries on disk for a map
         MapConfig mapConfig = config.getMapConfig(MAP_NAME);
+        MerkleTreeConfig merkleTreeConfig = mapConfig.getMerkleTreeConfig();
+        merkleTreeConfig.setEnabled(true);
+
         DataPersistenceConfig dataPersistenceConfig = mapConfig.getDataPersistenceConfig();
         dataPersistenceConfig.setEnabled(true);
         dataPersistenceConfig.setFsync(true);
@@ -62,5 +66,4 @@ class PersistenceTest {
             map.put(index, index);
         }
     }
-
 }
