@@ -1,13 +1,14 @@
 package com.colak.persistence;
 
+import com.hazelcast.cache.ICache;
+import com.hazelcast.config.CacheSimpleConfig;
 import com.hazelcast.config.Config;
 import com.hazelcast.config.DataPersistenceConfig;
-import com.hazelcast.config.MapConfig;
 import com.hazelcast.config.MerkleTreeConfig;
 import com.hazelcast.config.PersistenceConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.map.IMap;
+import com.hazelcast.core.ICacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,11 +17,11 @@ import java.io.File;
 /**
  * Example for IMap persistence
  */
-class IMapPersistenceTest {
+class ICachePersistenceTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(IMapPersistenceTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ICachePersistenceTest.class);
 
-    private static final String MAP_NAME = "my-map";
+    private static final String CACHE_NAME = "my-cache";
 
     public static void main(String[] args) {
         LOGGER.info("Starting HZ Client");
@@ -42,15 +43,15 @@ class IMapPersistenceTest {
         // enable persistence on the member
         PersistenceConfig persistenceConfig = new PersistenceConfig();
         persistenceConfig.setEnabled(true);
-        persistenceConfig.setBaseDir(new File("imap_persistence"));
+        persistenceConfig.setBaseDir(new File("icache_persistence"));
         config.setPersistenceConfig(persistenceConfig);
 
         //  Configure to persist entries on disk for a map
-        MapConfig mapConfig = config.getMapConfig(MAP_NAME);
-        MerkleTreeConfig merkleTreeConfig = mapConfig.getMerkleTreeConfig();
+        CacheSimpleConfig cacheConfig = config.getCacheConfig(CACHE_NAME);
+        MerkleTreeConfig merkleTreeConfig = cacheConfig.getMerkleTreeConfig();
         merkleTreeConfig.setEnabled(true);
 
-        DataPersistenceConfig dataPersistenceConfig = mapConfig.getDataPersistenceConfig();
+        DataPersistenceConfig dataPersistenceConfig = cacheConfig.getDataPersistenceConfig();
         dataPersistenceConfig.setEnabled(true);
         dataPersistenceConfig.setFsync(true);
 
@@ -58,7 +59,8 @@ class IMapPersistenceTest {
     }
 
     private static void testPutEntries(HazelcastInstance hazelcastClient) {
-        IMap<Integer, Integer> map = hazelcastClient.getMap(MAP_NAME);
+        ICacheManager cacheManager = hazelcastClient.getCacheManager();
+        ICache<Integer, Integer> map = cacheManager.getCache(CACHE_NAME);
         for (int index = 0; index < 100; index++) {
             map.put(index, index);
         }

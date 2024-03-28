@@ -17,6 +17,19 @@
         <logback.version>1.4.14</logback.version>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>hazelcast-private-repository</id>
+            <name>Hazelcast Private Repository</name>
+            <url>https://repository.hazelcast.com/release/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -44,17 +57,23 @@
             <version>${logback.version}</version>
         </dependency>
 
-        <!-- <dependency> -->
-        <!--     <groupId>com.hazelcast</groupId> -->
-        <!--     <artifactId>hazelcast-enterprise</artifactId> -->
-        <!--     <version>${hazelcast.version}</version> -->
-        <!-- </dependency> -->
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 
         <dependency>
             <groupId>com.hazelcast</groupId>
-            <artifactId>hazelcast</artifactId>
+            <artifactId>hazelcast-enterprise</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
+
+        <!-- <dependency> -->
+        <!--     <groupId>com.hazelcast</groupId> -->
+        <!--     <artifactId>hazelcast</artifactId> -->
+        <!--     <version>${hazelcast.version}</version> -->
+        <!-- </dependency> -->
 
         <dependency>
             <groupId>com.hazelcast</groupId>
