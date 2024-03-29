@@ -5,23 +5,17 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.NearCacheConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
-@UtilityClass
 @Slf4j
 class NearCacheTTL {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(NearCacheTTL.class);
-
     static final String MOSTLY_READ_MAP = "mostlyReadMap";
     public static void main(String[] args) {
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
 
         HazelcastInstance hazelcastInstanceClient = getHazelcastInstanceByConfig();
         testTTL(hazelcastInstanceClient);

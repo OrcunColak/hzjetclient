@@ -10,8 +10,6 @@ import com.hazelcast.nio.serialization.genericrecord.GenericRecord;
 import com.hazelcast.nio.serialization.genericrecord.GenericRecordBuilder;
 import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Test that we can add GenericRecords to map
@@ -19,13 +17,12 @@ import org.slf4j.LoggerFactory;
 @UtilityClass
 @Slf4j
 class AddGenericRecordToMapTest {
-    private final Logger LOGGER = LoggerFactory.getLogger(AddGenericRecordToMapTest.class);
     private final String MAP_NAME = "mostlyReadMap";
     private final int MAP_SIZE = 100;
     private final String INT_PROPERTY_NAME = "myint";
 
     public static void main(String[] args) {
-        LOGGER.info("Starting AddGenericRecordToMapTest");
+        log.info("Starting AddGenericRecordToMapTest");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
@@ -33,7 +30,7 @@ class AddGenericRecordToMapTest {
 
         // Shutdown server
         hazelcastServer.shutdown();
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     private HazelcastInstance getHazelcastServerInstanceByConfig() {

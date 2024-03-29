@@ -8,22 +8,20 @@ import com.hazelcast.config.PersistenceConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
 /**
  * Example for IMap persistence
  */
+@Slf4j
 class IMapPersistenceTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(IMapPersistenceTest.class);
 
     private static final String MAP_NAME = "my-map";
 
     public static void main(String[] args) {
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
@@ -31,7 +29,7 @@ class IMapPersistenceTest {
         testPutEntries(hazelcastServer);
 
         hazelcastServer.shutdown();
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     public static HazelcastInstance getHazelcastServerInstanceByConfig() {

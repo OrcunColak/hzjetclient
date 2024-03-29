@@ -7,22 +7,20 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.EntryProcessor;
 import com.hazelcast.map.IMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
 /**
  * Example for custom MapEntryStore
  */
+@Slf4j
 class MapEntryProcessorTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(MapEntryProcessorTest.class);
 
     private static final String MAP_NAME = "mymap";
 
     public static void main(String[] args) {
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
@@ -35,7 +33,7 @@ class MapEntryProcessorTest {
 
         hazelcastServer.shutdown();
         hazelcastClient.shutdown();
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     public static HazelcastInstance getHazelcastServerInstanceByConfig() {
@@ -54,7 +52,7 @@ class MapEntryProcessorTest {
             map.put(index, index);
         }
         Map<Integer, Integer> resultMap = map.executeOnEntries(new IncrementingEntryProcessor());
-        LOGGER.info("resultMap : {}", resultMap);
+        log.info("resultMap : {}", resultMap);
     }
 
     static class IncrementingEntryProcessor implements EntryProcessor<Integer, Integer, Integer> {

@@ -7,8 +7,7 @@ import com.hazelcast.config.RingbufferConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.ringbuffer.Ringbuffer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.BlockingDeque;
 import java.util.concurrent.ExecutorService;
@@ -21,9 +20,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * Consumer offloads processing to a thread pool
  */
+@Slf4j
 class RingBufferOffloadTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(RingBufferOffloadTest.class);
 
     private static final String RING_BUFFER_NAME = "myringbuffer";
     private static final int RING_BUFFER_SIZE = 5000;
@@ -39,7 +37,7 @@ class RingBufferOffloadTest {
     private static final AtomicBoolean runThreadsFlag = new AtomicBoolean(true);
 
     public static void main(String[] args) throws Exception {
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
 
         // Start server
         HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
@@ -55,7 +53,7 @@ class RingBufferOffloadTest {
         startSequenceCheck();
 
         // Keep the main thread alive so that the ExecutorService can continue running.
-        LOGGER.info("Press a key to exit");
+        log.info("Press a key to exit");
         int ignored = System.in.read();
 
         runThreadsFlag.set(false);
@@ -69,7 +67,7 @@ class RingBufferOffloadTest {
         hazelcastInstanceClient.shutdown();
         hazelcastServerInstance.shutdown();
 
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     private static void shutdownExecutorService(ExecutorService executorService) throws InterruptedException {

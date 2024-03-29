@@ -5,20 +5,18 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.config.ClientUserCodeDeploymentConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Test that map entry can be replaced when ClientUserCodeDeploymentConfig is used
  */
+@Slf4j
 class UserCodeDeploymentTest {
 
     private static final String MAP_NAME = "mymap";
 
-    private static final Logger logger = LoggerFactory.getLogger(UserCodeDeploymentTest.class);
-
     public static void main(String[] args) {
-        logger.info("Starting HZ Client");
+        log.info("Starting HZ Client");
         HazelcastInstance hazelcastInstanceClient = getHazelcastInstanceByClientUserCodeDeploymentConfig();
 
         testReplace(hazelcastInstanceClient);

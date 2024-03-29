@@ -5,15 +5,14 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.cp.CPSubsystem;
 import com.hazelcast.cp.ISemaphore;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 class SemaphoreTest {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SemaphoreTest.class);
 
     public static void main(String[] args) throws Exception {
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
 
         HazelcastInstance hazelcastInstanceClient = getHazelcastInstanceByConfig();
         testSemaphore(hazelcastInstanceClient);
@@ -30,6 +29,6 @@ class SemaphoreTest {
         mySemaphore.init(5);
 
         mySemaphore.acquire();
-        LOGGER.info("acquired semaphore");
+        log.info("acquired semaphore");
     }
 }

@@ -9,17 +9,15 @@ import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.spi.properties.ClusterProperty;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
 /**
  * Test to show that UCD and zero configuration compact serializer works
  */
+@Slf4j
 class ZeroConfigurationUserCodeDeploymentTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZeroConfigurationUserCodeDeploymentTest.class);
 
     private static final String MAP_NAME = "worker_map";
 
@@ -27,12 +25,12 @@ class ZeroConfigurationUserCodeDeploymentTest {
 
     public static void main(String[] args) throws Exception {
 
-        LOGGER.info("Starting HZ Server");
+        log.info("Starting HZ Server");
 
         // Start client
         HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
 
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
 
         // Start client
         HazelcastInstance hazelcastClientInstance = getHazelcastClientInstanceByConfig();
@@ -48,7 +46,7 @@ class ZeroConfigurationUserCodeDeploymentTest {
         // Shut down HZ server
         hazelcastServerInstance.shutdown();
 
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
@@ -82,13 +80,13 @@ class ZeroConfigurationUserCodeDeploymentTest {
 
         MyWorkerEntryProcessor entryProcessor = new MyWorkerEntryProcessor();
         Map<Integer, MyWorker> updatedMap = myWorkerMap.executeOnEntries(entryProcessor);
-        LOGGER.info("Updated map : {}", updatedMap);
+        log.info("Updated map : {}", updatedMap);
     }
 
     private static void printWorker(HazelcastInstance hazelcastClientInstance) {
         IMap<Integer, MyWorker> myWorkerMap = hazelcastClientInstance.getMap(MAP_NAME);
 
         MyWorker worker = myWorkerMap.get(KEY);
-        LOGGER.info("New Worker : {}", worker);
+        log.info("New Worker : {}", worker);
     }
 }

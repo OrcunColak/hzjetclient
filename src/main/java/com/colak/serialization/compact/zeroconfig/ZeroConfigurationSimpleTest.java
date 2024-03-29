@@ -9,20 +9,18 @@ import com.hazelcast.map.IMap;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Test to show that zero configuration works
  */
+@Slf4j
 class ZeroConfigurationSimpleTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ZeroConfigurationSimpleTest.class);
 
     private static final String MAP_NAME = "uuid_map";
 
     public static void main(String[] args) {
-        LOGGER.info("Starting Test");
+        log.info("Starting Test");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
@@ -39,7 +37,7 @@ class ZeroConfigurationSimpleTest {
         // Shut down HZ client
         hazelcastClient.shutdown();
 
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
@@ -59,7 +57,7 @@ class ZeroConfigurationSimpleTest {
         Employee employee = new Employee(id, "John Doe");
         myMap.set(id, employee);
         Employee employeeFromMap = myMap.get(id);
-        LOGGER.info("employeeFromMap : {}", employeeFromMap);
+        log.info("employeeFromMap : {}", employeeFromMap);
     }
 
     @Getter

@@ -14,27 +14,21 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.map.LocalMapStats;
 import com.hazelcast.nearcache.NearCacheStats;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-@UtilityClass
 @Slf4j
 class NearCacheNoEvict {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(NearCacheNoEvict.class);
 
     private static final String MAP_NAME = "mostlyReadMap";
     private static final int MAP_SIZE = 100;
 
     public static void main(String[] args) {
-        LOGGER.info("Starting NearCacheNoEvict");
+        log.info("Starting NearCacheNoEvict");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
         testNearCacheNoEvict(hazelcastServer);
-        LOGGER.info("Ending NearCacheNoEvict");
+        log.info("Ending NearCacheNoEvict");
     }
 
     public static HazelcastInstance getHazelcastServerInstanceByConfig() {

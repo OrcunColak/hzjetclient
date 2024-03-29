@@ -9,22 +9,20 @@ import com.hazelcast.config.PersistenceConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.ICacheManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 
 /**
  * Example for IMap persistence
  */
+@Slf4j
 class ICachePersistenceTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(ICachePersistenceTest.class);
 
     private static final String CACHE_NAME = "my-cache";
 
     public static void main(String[] args) {
-        LOGGER.info("Starting HZ Client");
+        log.info("Starting HZ Client");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
@@ -32,7 +30,7 @@ class ICachePersistenceTest {
         testPutEntries(hazelcastServer);
 
         hazelcastServer.shutdown();
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     public static HazelcastInstance getHazelcastServerInstanceByConfig() {

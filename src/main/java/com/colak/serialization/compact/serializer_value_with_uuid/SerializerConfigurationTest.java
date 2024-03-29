@@ -6,22 +6,20 @@ import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Test to show that compact serializer works for value object that has a UUI field
  */
+@Slf4j
 class SerializerConfigurationTest {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SerializerConfigurationTest.class);
 
     private static final String MAP_NAME = "uuid_map";
 
     private static final Integer KEY = 1;
 
     public static void main(String[] args) throws Exception {
-        LOGGER.info("Starting Test");
+        log.info("Starting Test");
 
         // Start server
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
@@ -38,7 +36,7 @@ class SerializerConfigurationTest {
         // Shut down HZ client
         hazelcastClient.shutdown();
 
-        LOGGER.info("Test completed");
+        log.info("Test completed");
     }
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
