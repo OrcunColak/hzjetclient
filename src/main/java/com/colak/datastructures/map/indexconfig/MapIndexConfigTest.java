@@ -9,8 +9,6 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.map.IMap;
 import com.hazelcast.query.Predicate;
 import com.hazelcast.query.Predicates;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collection;
@@ -61,10 +59,6 @@ class MapIndexConfigTest {
         log.info("YoungEmployees : {}", employees);
     }
 
-    @ToString
-    @RequiredArgsConstructor
-    private static class Employee {
-        final int id;
-        final int age;
+    private record Employee(int id, int age) {
     }
 }
