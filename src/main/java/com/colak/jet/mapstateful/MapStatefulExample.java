@@ -19,7 +19,7 @@ import java.util.List;
  * Add each item to accumulator and add the result to list
  */
 @Slf4j
-public class MapStatefulExample {
+class MapStatefulExample {
 
     private static final String LIST_NAME = "my-list";
 
@@ -35,7 +35,6 @@ public class MapStatefulExample {
 
         hazelcastServer.shutdown();
         log.info("Test completed");
-
     }
 
     private static void printOutputList(HazelcastInstance hazelcastServer) {
