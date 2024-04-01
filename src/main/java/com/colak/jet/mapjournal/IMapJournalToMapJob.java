@@ -20,14 +20,12 @@ import com.hazelcast.map.IMap;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Predicate;
-import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-@UtilityClass
 @Slf4j
 class IMapJournalToMapJob {
 
