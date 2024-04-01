@@ -58,9 +58,9 @@ class ICachePersistenceTest {
 
     private static void testPutEntries(HazelcastInstance hazelcastClient) {
         ICacheManager cacheManager = hazelcastClient.getCacheManager();
-        ICache<Integer, Integer> map = cacheManager.getCache(CACHE_NAME);
+        ICache<Integer, Integer> cache = cacheManager.getCache(CACHE_NAME);
         for (int index = 0; index < 100; index++) {
-            map.put(index, index);
+            cache.put(index, index);
         }
     }
 }
