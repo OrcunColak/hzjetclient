@@ -25,11 +25,10 @@ class NearCacheContainsKeyTest {
         log.info("Starting HZ Server");
 
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
+        populateMap(hazelcastServer);
 
         log.info("Starting HZ Client");
         HazelcastInstance hazelcastClient = getHazelcastClientInstanceByConfig();
-
-        populateMap(hazelcastServer);
 
         IMap<Integer, Integer> map = hazelcastClient.getMap(MAP_NAME);
         // This will populate the near cache
