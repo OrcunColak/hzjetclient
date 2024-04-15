@@ -1,4 +1,4 @@
-package com.colak.clusterproperty.shutdownhook;
+package com.colak.clusterproperty.jvmproperty;
 
 import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
@@ -6,19 +6,19 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.spi.properties.ClusterProperty;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Pass system properties using Programmatic Configuration
- * See
- * <a href="https://stackoverflow.com/questions/69255913/hazelcast-not-shutting-down-gracefully-in-spring-boot?answertab=modifieddesc#tab-top">...</a>
- * and
- * <a href="https://hazelcast.com/blog/rolling-upgrade-hazelcast-imdg-on-kubernetes/">...</a>
+ * Pass system properties using JVM’s System class
  */
 @Slf4j
-class ShutdownHookTest {
+class JVMPropertyTest {
 
     public static void main(String[] args) throws Exception {
+        Properties properties = java.lang.System.getProperties();
+        properties.put(ClusterProperty.SHUTDOWNHOOK_ENABLED.getName(), "true");
+        properties.put(ClusterProperty.SHUTDOWNHOOK_POLICY.getName(), "GRACEFUL");
 
         log.info("Starting HZ Server");
 
@@ -29,15 +29,11 @@ class ShutdownHookTest {
 
         log.info("Test completed");
 
-        System.exit(0);
+        hazelcastServerInstance.shutdown();
     }
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
-        config.setProperty(ClusterProperty.LOGGING_TYPE.getName(), "slf4j");
-        config.setProperty(ClusterProperty.SHUTDOWNHOOK_ENABLED.getName(), "true");
-        config.setProperty(ClusterProperty.SHUTDOWNHOOK_POLICY.getName(), "GRACEFUL");
-
         return Hazelcast.newHazelcastInstance(config);
     }
 
