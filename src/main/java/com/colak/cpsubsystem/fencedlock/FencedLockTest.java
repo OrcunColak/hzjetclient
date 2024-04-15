@@ -1,6 +1,9 @@
 package com.colak.cpsubsystem.fencedlock;
 
+import com.hazelcast.client.HazelcastClient;
+import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.config.Config;
+import com.hazelcast.config.cp.CPSubsystemConfig;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.cp.CPSubsystem;
@@ -18,15 +21,26 @@ class FencedLockTest {
 
         HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
-        testFencedLock(hazelcastServer);
+        // Start client
+        HazelcastInstance hazelcastClient = getHazelcastClientInstanceByConfig();
 
-        hazelcastServer.shutdown();
+        testFencedLock(hazelcastClient);
+
+        hazelcastClient.shutdown();
         log.info("Test completed");
     }
 
     private static HazelcastInstance getHazelcastServerInstanceByConfig() {
         Config config = new Config();
+        CPSubsystemConfig cpSubsystemConfig = config.getCPSubsystemConfig();
+        cpSubsystemConfig.setSessionTimeToLiveSeconds(30);
         return Hazelcast.newHazelcastInstance(config);
+    }
+
+    // Start client
+    private static HazelcastInstance getHazelcastClientInstanceByConfig() {
+        ClientConfig clientConfig = new ClientConfig();
+        return HazelcastClient.newHazelcastClient(clientConfig);
     }
 
     private static void testFencedLock(HazelcastInstance hazelcastServer) {
