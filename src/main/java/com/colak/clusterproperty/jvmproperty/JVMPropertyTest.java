@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Pass system properties using JVM’s System class
+ * See <a href="https://github.com/hazelcast/hazelcast/issues/26310">...</a>
  */
 @Slf4j
 class JVMPropertyTest {
