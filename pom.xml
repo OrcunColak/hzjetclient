@@ -29,10 +29,7 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id/>
-            <url>https://repo.maven.apache.org/maven2/</url>
-        </repository>
+
     </repositories>
     <dependencyManagement>
         <dependencies>
