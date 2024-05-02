@@ -92,7 +92,7 @@ class RingBufferOffloadTest {
         return HazelcastClient.newHazelcastClient(clientConfig);
     }
 
-    public static void startProducer(HazelcastInstance hazelcastInstanceClient) {
+    private static void startProducer(HazelcastInstance hazelcastInstanceClient) {
         Ringbuffer<Integer> ringbuffer = hazelcastInstanceClient.getRingbuffer(RING_BUFFER_NAME);
 
         AtomicInteger counter = new AtomicInteger();
