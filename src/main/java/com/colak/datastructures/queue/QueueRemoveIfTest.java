@@ -16,7 +16,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 // See https://stackoverflow.com/questions/78408548/hazelcast-iqueue-objects-stucks-on-more-requests
 // Producer is populating IQueue
 // Consumer is removing from IQueue at a slower rate
-// IQueue does not support Iterator.remove()
+// IQueue does not support Iterator.remove(), therefore removeIf() method does not work
 @Slf4j
 class QueueRemoveIfTest {
 
