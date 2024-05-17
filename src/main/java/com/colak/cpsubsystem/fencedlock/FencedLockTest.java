@@ -27,6 +27,7 @@ class FencedLockTest {
         testFencedLock(hazelcastClient);
 
         hazelcastClient.shutdown();
+        hazelcastServer.shutdown();
         log.info("Test completed");
     }
 
