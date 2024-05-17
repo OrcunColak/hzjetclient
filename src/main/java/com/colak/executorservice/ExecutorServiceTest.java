@@ -7,6 +7,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IExecutorService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.Serializable;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -37,15 +38,11 @@ class ExecutorServiceTest {
         return Hazelcast.newHazelcastInstance(config);
     }
 
+    interface SerializableCallable extends Callable<String>, Serializable {}
 
     private static void testSubmit(HazelcastInstance hazelcastServer) throws InterruptedException, ExecutionException {
         IExecutorService executorService = hazelcastServer.getExecutorService(EXECUTOR_NAME);
-        Future<String> future = executorService.submit(new Callable<>() {
-            @Override
-            public String call() {
-                return "Test";
-            }
-        });
+        Future<String> future = executorService.submit((SerializableCallable) () -> "Test");
         String result = future.get();
         log.info("Result : {}", result);
     }
