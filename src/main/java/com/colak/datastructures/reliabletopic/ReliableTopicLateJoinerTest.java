@@ -12,37 +12,34 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
 
-/**
- * Early joiner gets all published messages
- * Late joiner gets the latest message
- */
+// Early joiner gets all published messages. Late joiner gets the latest message
 @Slf4j
 class ReliableTopicLateJoinerTest {
 
-    private static final String TOPIC_NAME = "myringbuffer";
+    private static final String TOPIC_NAME = "my-reliable-topic";
 
     private static final CountDownLatch earlyJoinerCountDownLatch = new CountDownLatch(RingbufferConfig.DEFAULT_CAPACITY + 1);
     private static final CountDownLatch lateJoinerCountDownLatch = new CountDownLatch(1);
 
 
     public static void main(String[] args) throws Exception {
-        log.info("Starting HZ Client");
+        log.info("Starting HZ Server");
 
         // Start server
-        HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
+        HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
-        startEarlyJoiningListener(hazelcastServerInstance);
+        startEarlyJoiningListener(hazelcastServer);
 
-        startProducer(hazelcastServerInstance);
+        startProducer(hazelcastServer);
 
         // Do test
-        startLateJoiningListener(hazelcastServerInstance);
+        startLateJoiningListener(hazelcastServer);
 
         earlyJoinerCountDownLatch.await();
         lateJoinerCountDownLatch.await();
 
         // Shutdown server
-        hazelcastServerInstance.shutdown();
+        hazelcastServer.shutdown();
 
         log.info("Test completed");
     }

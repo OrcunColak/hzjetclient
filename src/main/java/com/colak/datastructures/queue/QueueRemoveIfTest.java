@@ -28,23 +28,23 @@ class QueueRemoveIfTest {
         log.info("Starting HZ Client");
 
         // Start server
-        HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
+        HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
         // Start client
-        HazelcastInstance hazelcastInstanceClient = getHazelcastClientInstanceByConfig();
+        HazelcastInstance hazelcastClient = getHazelcastClientInstanceByConfig();
 
-        startProducer(hazelcastServerInstance);
-        startConsumer(hazelcastInstanceClient);
+        startProducer(hazelcastServer);
+        startConsumer(hazelcastClient);
 
         TimeUnit.SECONDS.sleep(10);
 
         scheduledExecutorService.shutdown();
 
-        printQueue(hazelcastServerInstance);
+        printQueue(hazelcastServer);
 
         // Shut down HZ client and server
-        hazelcastInstanceClient.shutdown();
-        hazelcastServerInstance.shutdown();
+        hazelcastClient.shutdown();
+        hazelcastServer.shutdown();
 
         log.info("Test completed");
     }

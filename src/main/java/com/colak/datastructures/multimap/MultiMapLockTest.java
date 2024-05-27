@@ -27,21 +27,21 @@ class MultiMapLockTest {
         log.info("Starting HZ Client");
 
         // Start server
-        HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
+        HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
         // Start client
-        HazelcastInstance hazelcastClientInstance = getHazelcastClientInstanceByConfig();
+        HazelcastInstance hazelcastClient = getHazelcastClientInstanceByConfig();
 
         // Do test
-        testMultiThreadedPut(hazelcastClientInstance);
-        printMultiMapSize(hazelcastClientInstance);
+        testMultiThreadedPut(hazelcastClient);
+        printMultiMapSize(hazelcastClient);
 
-        testMultiThreadedPutAllAsync(hazelcastClientInstance);
-        printMultiMapSize(hazelcastClientInstance);
+        testMultiThreadedPutAllAsync(hazelcastClient);
+        printMultiMapSize(hazelcastClient);
 
         // Shut down HZ client and server
-        hazelcastClientInstance.shutdown();
-        hazelcastServerInstance.shutdown();
+        hazelcastClient.shutdown();
+        hazelcastServer.shutdown();
 
         log.info("Test completed");
     }

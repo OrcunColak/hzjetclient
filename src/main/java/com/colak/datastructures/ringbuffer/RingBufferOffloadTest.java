@@ -40,15 +40,15 @@ class RingBufferOffloadTest {
         log.info("Starting HZ Client");
 
         // Start server
-        HazelcastInstance hazelcastServerInstance = getHazelcastServerInstanceByConfig();
+        HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
         // Start client
-        HazelcastInstance hazelcastInstanceClient = getHazelcastClientInstanceByConfig();
+        HazelcastInstance hazelcastClient = getHazelcastClientInstanceByConfig();
 
-        startProducer(hazelcastInstanceClient);
+        startProducer(hazelcastClient);
 
         // Do test
-        startConsumer(hazelcastInstanceClient);
+        startConsumer(hazelcastClient);
 
         startSequenceCheck();
 
@@ -64,8 +64,8 @@ class RingBufferOffloadTest {
         shutdownExecutorService(sequenceCheck);
 
         // Shut down HZ client and server
-        hazelcastInstanceClient.shutdown();
-        hazelcastServerInstance.shutdown();
+        hazelcastClient.shutdown();
+        hazelcastServer.shutdown();
 
         log.info("Test completed");
     }
