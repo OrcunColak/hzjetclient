@@ -11,13 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
-/**
- * Example for custom MapEntryStore
- */
+
 @Slf4j
 class MapEntryProcessorTest {
 
-    private static final String MAP_NAME = "mymap";
+    private static final String MAP_NAME = "my-map";
 
     public static void main(String[] args) {
         log.info("Starting HZ Client");
