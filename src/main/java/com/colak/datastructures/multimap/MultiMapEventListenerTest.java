@@ -13,13 +13,12 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.CountDownLatch;
 
-/**
- * Test to show that EvenListener can listen to MultiMap
- */
+
+// Test to show that EvenListener can listen to MultiMap
 @Slf4j
 class MultiMapEventListenerTest {
 
-    private static final String MULTI_MAP_NAME = "mymultimap";
+    private static final String MULTI_MAP_NAME = "my-multimap";
 
     private static final CountDownLatch entryUpdatedLatch = new CountDownLatch(1);
 
@@ -54,7 +53,7 @@ class MultiMapEventListenerTest {
         return HazelcastClient.newHazelcastClient(clientConfig);
     }
 
-    private static void testPut(HazelcastInstance hazelcastClientInstance) throws InterruptedException {
+    private static void testPut(HazelcastInstance hazelcastClientInstance) {
         MultiMap<Integer, Integer> multiMap = hazelcastClientInstance.getMultiMap(MULTI_MAP_NAME);
         multiMap.addEntryListener(new EntryListener<>() {
             @Override
@@ -83,7 +82,6 @@ class MultiMapEventListenerTest {
             @Override
             public void entryUpdated(EntryEvent<Integer, Integer> event) {
                 log.info("entryUpdated key : {}, value : {}", event.getKey(), event.getValue());
-
             }
 
             @Override
@@ -100,8 +98,5 @@ class MultiMapEventListenerTest {
         int key = 1;
         multiMap.put(key, 1);
         multiMap.put(key, 2);
-
-
     }
-
 }

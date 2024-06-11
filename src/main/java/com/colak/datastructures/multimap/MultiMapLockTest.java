@@ -19,7 +19,7 @@ import java.util.concurrent.CountDownLatch;
 @Slf4j
 class MultiMapLockTest {
 
-    private static final String MULTI_MAP_NAME = "mymultimap";
+    private static final String MULTI_MAP_NAME = "my-multimap";
 
     private static final int KEY = 1;
 
