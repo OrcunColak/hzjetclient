@@ -36,19 +36,19 @@ class SqlServerGenericMapStoreTest {
         log.info("Starting HZ Server");
 
         // Start server
-        HazelcastInstance hazelcastInstanceServer = getHazelcastServerInstanceByConfig();
+        HazelcastInstance hazelcastServer = getHazelcastServerInstanceByConfig();
 
 
-        testGetFromMap(hazelcastInstanceServer);
-        testPutToMap(hazelcastInstanceServer);
+        testGetFromMap(hazelcastServer);
+        testPutToMap(hazelcastServer);
 
-        hazelcastInstanceServer.shutdown();
+        hazelcastServer.shutdown();
 
         log.info("Test completed");
     }
 
-    private static void testGetFromMap(HazelcastInstance hazelcastInstanceServer) {
-        IMap<Integer, GenericRecord> map = hazelcastInstanceServer.getMap(MAP_NAME);
+    private static void testGetFromMap(HazelcastInstance hazelcastServer) {
+        IMap<Integer, GenericRecord> map = hazelcastServer.getMap(MAP_NAME);
         GenericRecord sqlServerWorkerTableEntry = map.get(1);
         if (sqlServerWorkerTableEntry != null) {
             log.info("GenericMapStore get succeeded with sqlServerWorkerTableEntry {}", sqlServerWorkerTableEntry);
@@ -57,8 +57,8 @@ class SqlServerGenericMapStoreTest {
         }
     }
 
-    private static void testPutToMap(HazelcastInstance hazelcastInstanceServer) {
-        IMap<Integer, GenericRecord> map = hazelcastInstanceServer.getMap(MAP_NAME);
+    private static void testPutToMap(HazelcastInstance hazelcastServer) {
+        IMap<Integer, GenericRecord> map = hazelcastServer.getMap(MAP_NAME);
         int key = 1;
         GenericRecord genericRecord = map.get(key);
         // Update entry
