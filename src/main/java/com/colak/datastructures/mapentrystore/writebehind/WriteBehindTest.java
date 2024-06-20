@@ -1,4 +1,4 @@
-package com.colak.datastructures.mapentrystore.bug_writebehind;
+package com.colak.datastructures.mapentrystore.writebehind;
 
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
@@ -11,10 +11,6 @@ import com.hazelcast.map.IMap;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.concurrent.TimeUnit;
-
-
-// See <a href="https://github.com/hazelcast/hazelcast/issues/18676">...</a>
-// This example shows that clearing the map does not clear the map store
 
 @Slf4j
 class WriteBehindTest {
@@ -61,45 +57,38 @@ class WriteBehindTest {
 
 
     private static void startThreads(HazelcastInstance hazelcastClient) {
-        Thread writeThread = new Thread(() -> {
-            IMap<Integer, MyRecord> map = hazelcastClient.getMap(MAP_NAME);
-            for (int index = 0; index < 1_000; index++) {
-                MyRecord value = new MyRecord("value " + index);
-                map.put(index, value);
-
-                sleepSeconds(1);
-            }
-        });
-        writeThread.start();
 
         Thread monitorThread = new Thread(() -> {
+            IMap<Integer, MyRecord> map = hazelcastClient.getMap(MAP_NAME);
             while (!Thread.currentThread().isInterrupted()) {
-                log.info("map store size: {}", myMapEntryStore.size());
+                MyRecord myRecord = map.get(0);
+                if (myRecord.getValue().equals("10")) {
+                    log.info("Found 10");
+                }
 
-                sleepSeconds(1);
+
             }
 
         });
         monitorThread.start();
 
-        Thread clearThread = new Thread(() -> {
+        Thread writeThread = new Thread(() -> {
             IMap<Integer, MyRecord> map = hazelcastClient.getMap(MAP_NAME);
-            while (!Thread.currentThread().isInterrupted()) {
-                map.removeAll(entry -> true);
-                log.info("clearThread running");
-                sleepSeconds(1);
+            for (int index = 0; index < 1; index++) {
+                MyRecord value = new MyRecord("value " + index);
+                log.info("Putting Key : {} , Value : {}", index, value);
+                map.put(index, value);
             }
 
         });
-        clearThread.start();
+        writeThread.start();
 
         try {
             writeThread.join();
             monitorThread.interrupt();
-            clearThread.interrupt();
 
             monitorThread.join();
-            clearThread.join();
+
         } catch (InterruptedException exception) {
             Thread.currentThread().interrupt();
         }
@@ -115,4 +104,5 @@ class WriteBehindTest {
             Thread.currentThread().interrupt();
         }
     }
+
 }
