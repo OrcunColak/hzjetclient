@@ -21,9 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Example to move data from IList to IMap of multimap
- */
+// Example to move data from IList to IMap of multimap
 @Slf4j
 class SinkMapTest {
 

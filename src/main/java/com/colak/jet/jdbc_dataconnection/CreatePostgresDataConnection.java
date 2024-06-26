@@ -10,15 +10,15 @@ public class CreatePostgresDataConnection {
     // Name of the connection pool
     public final String CONNECTION_NAME = "postgres_shared";
 
-    public static void createDataConnection(HazelcastInstance hazelcastInstanceClient) {
+    public static void createDataConnection(HazelcastInstance hazelcastInstance) {
         String databaseUrl = "jdbc:postgresql://localhost:5432/db";
         String userName = "postgres";
         String password = "postgres";
-        createDataConnection(hazelcastInstanceClient, databaseUrl, userName, password);
+        createDataConnection(hazelcastInstance, databaseUrl, userName, password);
     }
 
     // Create JDBC Connection Pool on cluster
-    private static void createDataConnection(HazelcastInstance hazelcastInstanceClient,
+    private static void createDataConnection(HazelcastInstance hazelcastInstance,
                                              String databaseUrl,
                                              String userName,
                                              String password) {
@@ -26,7 +26,7 @@ public class CreatePostgresDataConnection {
         String sql = String.format("CREATE DATA CONNECTION IF NOT EXISTS %s TYPE JDBC SHARED OPTIONS('jdbcUrl'='%s','user'='%s','password'='%s')",
                 CONNECTION_NAME, databaseUrl, userName, password);
 
-        SqlService sqlService = hazelcastInstanceClient.getSql();
+        SqlService sqlService = hazelcastInstance.getSql();
         sqlService.executeUpdate(sql);
     }
 }
