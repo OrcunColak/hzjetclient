@@ -84,11 +84,13 @@ public class SinkJdbcIncorrectSqlTest {
             job.join();
 
         } catch (RuntimeException exception) {
+            // Getting .CancellationByUserException
             log.error("Exception : ", exception);
         }
 
         assert job != null;
         JobStatus status = job.getStatus();
+        // Job Status after cancellation: FAILED
         log.info("Job Status after cancellation: {}", status);
     }
 }
