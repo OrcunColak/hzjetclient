@@ -26,6 +26,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+// Read from Map journal a HazelcastJsonValue. Extract the integers from the list within the HazelcastJsonValue and write the integers
+// to a sink map
 @Slf4j
 class IMapJournalToMapJob {
 
@@ -117,6 +119,7 @@ class IMapJournalToMapJob {
         var sink = Sinks.map(sinkMap);
         pipeline.readFrom(source)
                 .withoutTimestamps()
+                .setLocalParallelism(1)
                 .writeTo(sink);
 
         JobConfig jobConfig = new JobConfig();
