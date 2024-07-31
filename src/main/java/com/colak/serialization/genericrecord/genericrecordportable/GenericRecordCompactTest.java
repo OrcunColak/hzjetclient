@@ -13,6 +13,8 @@ public class GenericRecordCompactTest {
                 .setString("firstName", "a")
                 .setString("lastName", "b")
                 .build();
+
+        // GenericRecord : {"person": {"firstName": "a", "id": 1, "lastName": "b"}}
         log.info("GenericRecord : {}", genericRecord);
     }
 }
