@@ -52,7 +52,7 @@ class DataGenJobTest {
         return Hazelcast.newHazelcastInstance(config);
     }
 
-    static class CountingProjection implements FunctionEx<SourceRecord, String> {
+    private static class CountingProjection implements FunctionEx<SourceRecord, String> {
         private int counter = 0;
 
         @Override

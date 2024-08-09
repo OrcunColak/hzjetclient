@@ -13,14 +13,13 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <lombok.version>1.18.30</lombok.version>
-        <hazelcast.version>5.4.0</hazelcast.version>
+        <hazelcast.version>5.5.0</hazelcast.version>
         <logback.version>1.4.14</logback.version>
     </properties>
 
     <repositories>
         <repository>
-            <id>hazelcast-private-repository</id>
-            <name>Hazelcast Private Repository</name>
+            <id>Hazelcast Private Release Repository</id>
             <url>https://repository.hazelcast.com/release/</url>
             <releases>
                 <enabled>true</enabled>
@@ -29,6 +28,29 @@
                 <enabled>false</enabled>
             </snapshots>
         </repository>
+        <repository>
+            <id>Hazelcast Private Snapshot Repository</id>
+            <url>https://repository.hazelcast.com/snapshot/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>interval:720</updatePolicy>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>Hazelcast Public Snapshot Repository</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>interval:720</updatePolicy>
+            </snapshots>
+        </repository>
+
         <repository>
             <id>maven_central</id>
             <name>Maven Central</name>
@@ -140,6 +162,13 @@
             <artifactId>mysql-connector-j</artifactId>
             <version>8.4.0</version>
             <scope>runtime</scope>
+        </dependency>
+
+        <!-- Couchbase Driver -->
+        <dependency>
+            <groupId>com.couchbase.client</groupId>
+            <artifactId>java-client</artifactId>
+            <version>3.7.1</version>
         </dependency>
 
         <dependency>
